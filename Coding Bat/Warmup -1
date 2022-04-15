@@ -1,0 +1,348 @@
+//Ques1 - sleepIn
+public boolean sleepIn(boolean weekday, boolean vacation) {
+  if(weekday == vacation)
+  {
+    return true;
+  }
+  else if(weekday==true && vacation==false)
+  {
+    return false;
+  }
+  else
+    return true;
+}
+
+public boolean sleepIn(boolean weekday, boolean vacation) {
+  if(!weekday || vacation)
+  {
+    return true;
+  }
+  else
+    return false;
+}
+
+//Ques2 - monkeyTrouble
+public boolean monkeyTrouble(boolean aSmile, boolean bSmile) {
+    if((aSmile&&bSmile) || (!aSmile&&!bSmile))  //XNOR gate
+    {
+      return true;
+    }
+    else return false;
+} 
+
+public boolean monkeyTrouble(boolean aSmile, boolean bSmile) {
+    return aSmile == bSmile;
+}
+
+//Ques3 - sumDouble
+public int sumDouble(int a, int b) {
+    if(a == b)
+    {
+      return (a+b)*2;
+    }
+    else return a+b;
+}
+  
+//Ques4 - diff21
+public int diff21(int n) {
+    if(n<=21)
+    {
+      return 21-n;
+    }
+    else
+      return (n-21)*2;
+}
+
+//Ques5 - parrotTrouble
+public boolean parrotTrouble(boolean talking, int hour) {
+    if(talking && (hour<7 || hour>20))
+    {
+      return true;
+    }
+    else
+     return false;
+}
+ 
+//Ques6 - makes10
+public boolean makes10(int a, int b) {
+    return (a==10 || b==10 || a+b==10);
+}
+
+//Ques7 - nearHundred
+public boolean nearHundred(int n) {
+    return ((n>=90 && n<=110) || (n>=190 && n<=210));
+}
+
+public boolean nearHundred(int n) {
+    return ((Math.abs(100-n) <=10) || (Math.abs(200-n) <=10));
+}
+
+//Ques8 - posNeg
+public boolean posNeg(int a, int b, boolean negative) {
+    if(negative && a<0 && b<0)
+      return true;
+    else if(!negative && a<0 && b<0)
+     return false;
+    
+    else if((a<0 || b<0) && !negative)
+      return true;
+    
+    else return false;
+}
+
+public boolean posNeg(int a, int b, boolean negative) {
+    if(negative)
+    {
+      return (a<0 && b<0);
+    }
+    else
+    {
+      return ((a<0 && b>0) || (a>0 && b<0));
+    }
+}
+
+//Ques9 - notString
+public String notString(String str) {
+    if(str.length()<3)
+      return "not "+str;
+      
+    if(str.substring(0,3).equals("not"))
+      return str;
+    
+    else
+     return "not "+str;
+}
+
+//Ques10 - missingChar
+public String missingChar(String str, int n) {
+    String newStr = str.substring(0,n) + str.substring(n+1);
+    return newStr;
+  }
+
+//Ques11 - frontBack
+public String frontBack(String str) {
+    if(str.length() <2)
+      return str;
+    char front = str.charAt(0);
+    char back = str.charAt(str.length()-1);
+    String newStr=back + str.substring(1,str.length()-1) + front;
+    return newStr;
+    
+  }
+
+//Ques12 - front3
+public String front3(String str) {
+    if(str.length()<3)
+      return str+str+str;
+    
+    String rep = str.substring(0, 3);
+    return rep+rep+rep;
+  }
+
+//Ques13 - backAround
+public String backAround(String str) {
+    char ch = str.charAt(str.length()-1);
+    return ch+str+ch;
+  }
+
+//Ques14 - or35
+public boolean or35(int n) {
+    return (n%3==0 || n%5==0);
+  }
+
+//Ques15 - front22
+public String front22(String str) {
+    String front;
+    if(str.length()<2)
+      front = str;
+    else 
+     front = str.substring(0,2);
+    return front + str + front;
+  }
+
+//Ques16 - startHi
+public boolean startHi(String str) {
+    if(str.length()<2) return false;
+    
+    return (str.substring(0,2).equals("hi"));
+  }
+
+//Ques17 - icyHot
+public boolean icyHot(int temp1, int temp2) {
+    if((temp1<0 && temp2>100) || (temp1>00 && temp2<0))
+      return true;
+    return false;
+  }
+
+//Ques18 - in1020
+public boolean in1020(int a, int b) {
+    if((a>=10 && a<=20) || (b>=10 && b<=20))
+      return true;
+    else return false;
+  }
+
+//Ques19 - hasTeen
+public boolean hasTeen(int a, int b, int c) {
+    return ((a>=13 && a<=19) || (b>=13 && b<=19) || (c>=13 && c<=19));
+  }
+
+//Ques20 - loneTeen
+public boolean loneTeen(int a, int b) {
+    if ((a>=13 && a<=19) && (b>=13 && b<=19))
+      return false;
+    else if(!(a>=13 && a<=19) && !(b>=13 && b<=19))
+      return false;
+    else return true;
+}
+
+public boolean loneTeen(int a, int b) {
+   if (((a>=13 && a<=19) && !(b>=13 && b<=19)) || (!(a>=13 && a<=19) && (b>=13 && b<=19)))
+     return true;
+   
+   else return false;
+}
+
+//Ques21 - delDel
+public String delDel(String str) {
+    if(str.length() < 4)
+      return str;
+    
+    if(str.substring(1,4).equals("del"))
+      return str.charAt(0) + str.substring(4);
+    else
+      return str;
+}
+
+//Ques22 - mixStart
+public boolean mixStart(String str) {
+    if(str.length() < 3)
+      return false;
+    
+    if(str.substring(1,3).equals("ix"))
+      return true;
+    else return false;
+  }
+
+//Ques23 - startOz
+public String startOz(String str) {
+    if(str.length()<2)
+    {
+      if(str.length()==1 && str.charAt(0)=='o')
+        return "o";
+      
+      return "";
+    }
+    
+    if(str.substring(0,2).equals("oz"))
+      return "oz";
+    else if(str.charAt(0)=='o')
+      return "o";
+    else if(str.charAt(1)=='z')
+      return "z";
+    else
+     return "";
+  }
+
+//Ques24 - intMax 
+public int intMax(int a, int b, int c) {
+    int lar;
+    if(a<b){
+      lar = b;
+    }
+    else
+      lar = a;
+    
+    if(lar<c)
+    {
+      lar = c;
+    }
+    
+    return lar;
+  }
+
+//Ques25 - close10
+public int close10(int a, int b) {
+    if(Math.abs(10-a) < Math.abs(10-b))
+      return a;
+    else if(Math.abs(10-a) > Math.abs(10-b))
+      return b;
+    
+    return 0;
+  }
+
+//Ques26 - in3050
+public boolean in3050(int a, int b) {
+    if((a>=30 && a<=40) && (b>=30 && b<=40))
+      return true;
+    
+    else if((a>=40 && a<=50) && (b>=40 && b<=50))
+      return true;
+    
+    else return false;
+  }
+
+//Ques27 - max1020
+public int max1020(int a, int b) {
+    int max=0;
+    if(a>=10 && a<=20) 
+      max=a;
+    
+    if(b>=10 && b<=20)
+    {
+      if(max < b)
+        max=b;
+    }
+    
+    return max;
+  }
+  
+//Ques28 - stringE
+public boolean stringE(String str) {
+    int count = 0;
+    for(int i=0; i<str.length(); i++)
+    {
+      if(str.charAt(i) == 'e')
+        count++;
+    }
+    if(count>0 && count<4)
+      return true;
+    else return false;
+  }
+
+//Ques29 - lastDigit
+public boolean lastDigit(int a, int b) {
+    if(a%10 == b%10)
+      return true;
+    else
+      return false;
+  }
+
+//Ques30 - endUp
+public String endUp(String str) {
+    if(str.length()<3)
+      return str.toUpperCase();
+    
+    int n = str.length()-3;
+    String Upcase = str.substring(n);
+    return str.substring(0, n)+Upcase.toUpperCase();
+  }
+
+//Ques31 - everyNth
+public String everyNth(String str, int n) {
+    String ans = "";
+    if(str.length()<n)
+    {
+      if(str.length()==0)
+        return "";
+      
+      ans +=str.charAt(0);
+      return ans;
+    }
+    
+    for(int i=0; i<str.length(); i+=n)
+    {
+      ans+=str.charAt(i);
+    }
+    return ans;
+      
+  }

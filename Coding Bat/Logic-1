@@ -1,0 +1,163 @@
+//Ques1 - cigarParty
+public boolean cigarParty(int cigars, boolean isWeekend) {
+  if(isWeekend) 
+  {
+    return (cigars>=40);
+  }
+  else {
+    return (cigars>=40 && cigars<=60);
+  }
+}
+
+//Ques2 - dateFashion
+public int dateFashion(int you, int date) {
+  if(you <= 2 || date <= 2) return 0;
+  else if(you >= 8 || date >= 8) return 2;
+  else
+    return 1;
+}
+
+//Ques3 -
+public boolean squirrelPlay(int temp, boolean isSummer) {
+  if(isSummer)
+  {
+    return (temp <= 100 && temp >= 60);
+  }
+  else
+    return (temp <=90 && temp >= 60);
+}
+
+//Ques4 - 
+public int caughtSpeeding(int speed, boolean isBirthday) {
+  if(isBirthday)
+  {
+    if(speed <= 65) return 0;
+    else if(speed <= 85) return 1;
+    else return 2;
+  }
+  else
+  {
+    if(speed <= 60) return 0;
+    else if(speed <= 80) return 1;
+    else return 2;
+  }
+}
+
+//Ques5 -
+public int sortaSum(int a, int b) {
+  int sum = a+b;
+  return (sum>=10 && sum<=19)? 20 : sum;
+}
+
+//Ques6 -
+public String alarmClock(int day, boolean vacation) {
+  if(vacation)
+  {
+    if(day!=0 && day!=6) return "10:00";
+    else
+      return "off";
+  }
+  else
+  {
+    if(day==0 || day==6) return "10:00";
+    else
+      return "7:00";
+  }
+}
+
+//Ques7 -
+public boolean love6(int a, int b) {
+  return (a==6 || b==6 || a+b==6 || Math.abs(a-b)==6);
+}
+
+//Ques8 -
+public boolean in1To10(int n, boolean outsideMode) {
+  if(!outsideMode)
+  {
+    return (n>=1 && n<=10);
+  }
+  else
+  {
+    return (n<=1 || n>=10);
+  }
+}
+
+//Ques9 -
+public boolean specialEleven(int n) {
+  return (n%11 == 0 || n%11 == 1);
+}
+
+//Ques10 -
+public boolean more20(int n) {
+  return (n%20==1 || n%20==2);
+}
+
+//Ques11 -
+public boolean old35(int n) {
+  if(n%3==0 && n%5==0) return false;
+  return (n%3==0 || n%5==0);
+}
+
+//Ques12 -
+public boolean less20(int n) {
+  return (n%20==18 || n%20==19);
+}
+
+//Ques13 -
+public boolean nearTen(int num) {
+  int ans = num%10;
+  return (ans<=2 || ans>=8);
+}
+
+//Ques14 -
+public int teenSum(int a, int b) {
+  if((a>=13 && a<=19) || (b>=13 && b<=19))
+    return 19;
+  else
+    return a+b;
+}
+
+//Ques15 -
+public boolean answerCell(boolean isMorning, boolean isMom, boolean isAsleep) {
+  if(isAsleep) return false;
+  else if(isMom) return true;
+  return (!isMorning && !isMom && !isAsleep);
+}
+
+//Ques16 -
+public int teaParty(int tea, int candy) {
+  
+  if(tea < 5 || candy < 5) return 0;
+  else
+  {
+    if(tea >= 2*candy || candy >= 2*tea) return 2;
+    if(tea>=5 && candy>=5)  return 1;
+    return 0;
+  }
+
+}
+
+//Ques17 -
+public String fizzString(String str) {
+  String ans = "";
+  if(str.charAt(0) == 'f')
+    ans += "Fizz";
+  if(str.charAt(str.length()-1) == 'b')
+    ans += "Buzz";
+    
+  if(ans.length()==0)
+    return str;
+  return ans;
+}
+
+//Ques18 -
+public String fizzString2(int n) {
+  if(n%3==0 && n%5==0)
+    return "FizzBuzz!";
+  else if(n%3 == 0)
+    return "Fizz!";
+  else if(n%5==0)
+    return "Buzz!";
+  return n+"!";
+}
+

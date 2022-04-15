@@ -1,0 +1,278 @@
+//Ques1 - stringTimes
+public String stringTimes(String str, int n) {
+  String newStr = "";
+  for(int i=0; i<n; i++)
+  {
+    newStr += str;
+  }
+  return newStr;
+}
+
+//Ques2 - frontTimes
+public String frontTimes(String str, int n) {
+  String ans = "";
+  String res;
+  if(str.length() < 3)
+  {
+    res = str;
+  }
+  else  
+    res = str.substring(0,3);
+    
+  for(int i=0; i<n; i++)
+  {
+    ans += res;
+  }
+  return ans;
+}
+
+//Ques3 - countXX
+int countXX(String str) {
+    if(str.length() < 2)
+    {
+      return 0;
+    }
+    
+    int count=0;
+    for(int i=0; i<str.length()-1; i++)
+    {
+      String sub = str.substring(i,i+2);
+      if(sub.equals("xx"))
+        count++;
+    }
+    return count;
+}
+
+//Ques4 - doubleX
+boolean doubleX(String str) {
+    if(str.length()<2)
+      return false;
+      
+    for(int i=0; i<str.length()-1; i++)
+    {
+      char ch = str.charAt(i);
+      if(ch == 'x')
+      {
+        if(str.charAt(i+1) == 'x')
+          return true;
+        else
+         return false;
+      }
+    }
+    
+    return false;
+}
+//Can also used functions like indexOf() and startsWith() to solve the above problem
+
+//Ques5 - stringBits
+public String stringBits(String str) {
+    if(str.length()<2)
+      return str;
+    
+    String ans = "";
+    for(int i=0; i<str.length(); i+=2)
+    {
+      ans+=str.charAt(i);
+    }
+    return ans;
+}
+
+//Ques6 - stringSplosion
+public String stringSplosion(String str) {
+    if(str.length()<2)
+      return str;
+    
+    String ans = "";
+    for(int i=1; i<str.length()+1; i++)
+    {
+      ans += str.substring(0,i);
+    }
+    return ans;
+}
+
+//Ques7 - last2
+public int last2(String str) {
+  if(str.length()<2)
+    return 0;
+    
+  int count=0;
+  String end = str.substring(str.length()-2);
+  for(int i=0; i<str.length()-2; i++)
+  {
+    String st = str.substring(i,i+2);
+    if(st.equals(end))
+      count++;
+  }
+  return count;
+}
+
+//Ques8 - arrayCount9
+public int arrayCount9(int[] nums) {
+    int count = 0;
+    for(int i=0; i<nums.length; i++)
+    {
+      if(nums[i] == 9)
+        count++;
+    }
+    
+    return count;
+}
+
+//Ques10 - arrayFront9
+public boolean arrayFront9(int[] nums) {
+    int size = 4;
+    if(nums.length < 4)
+    {
+      size = nums.length;
+    }
+    
+    for(int i=0; i<size; i++)
+    {
+      if(nums[i] == 9)
+        return true;
+    }
+    return false;
+}
+
+//Ques11 - array123
+public boolean array123(int[] nums) {
+    int count1 = 0;
+    int count2 = 0;
+    int count3 = 0;
+    for(int i=0; i<nums.length; i++)
+    {
+      if(nums[i] == 1)
+        count1++;
+      else if(nums[i] == 2)
+        count2++;
+      else if(nums[i] == 3)
+        count3++;
+    }
+    
+    return (count1>0 && count2>0 && count3>0);
+}
+
+public boolean array123(int[] nums) {
+
+    for(int i=0; i<nums.length-2; i++)
+    {
+      if (nums[i] == 1 && nums[i+1] == 2 && nums[i+2] == 3)
+        return true;
+    }
+    
+    return false;
+} 
+
+//Ques12 - stringMatch
+public int stringMatch(String a, String b) {
+    if(a.length()<2 || b.length()<2)
+      return 0;
+    
+    int count=0;
+    int len = (a.length() < b.length())? a.length() : b.length();
+    
+    for(int i=0; i<len-1; i++)
+    {
+      String sub1 = a.substring(i,i+2);
+      String sub2 = b.substring(i,i+2);
+      if(sub1.equals(sub2))
+        count++;
+    }
+    return count;
+}
+
+//Ques13 - stringX
+public String stringX(String str) {
+    if(str.length()<2)
+      return str;
+      
+    String ans = "";
+    ans += str.charAt(0);
+    for(int i=1; i<str.length()-1; i++)
+    {
+      char ch = str.charAt(i);
+      if(ch == 'x') continue;
+      ans += ch;
+    }
+    ans += str.charAt(str.length()-1);
+    return ans;
+}
+  
+//Ques14 - altPairs
+public String altPairs(String str) {
+    if(str.length() < 3)
+      return str;
+    
+    String ans = "";
+    for(int i=0; i<str.length(); i++)
+    {
+      if(i%4 == 0 || i%4 == 1)
+      {
+        ans += str.charAt(i);
+      }
+    }
+    return ans;
+}
+
+//Ques15 - stringYak
+public String stringYak(String str) {
+    if(str.length() < 3)
+      return str;
+    
+    String ans = "";
+    for(int i=0; i<str.length()-2; i++)
+    {
+      if(str.substring(i, i+3).equals("yak"))
+      {
+        i+=2;
+        continue;
+      }
+  
+      ans += str.charAt(i);
+    }
+    
+    if(!str.substring(str.length()-3).equals("yak"))
+      ans += str.substring(str.length()-2);
+      
+    return ans;
+}
+
+//Ques16 - array667
+public int array667(int[] nums) {
+  
+    int count=0;
+    for(int i=0; i<nums.length-1; i++)
+    {
+      if(nums[i] == 6)
+      {
+        if(nums[i+1] == 6 || nums[i+1] == 7)
+        {
+          count++;
+        }
+      }
+    }
+    return count;
+  }
+
+//Ques17 - noTriples
+public boolean noTriples(int[] nums) {
+    for(int i=0; i<nums.length-2; i++)
+    {
+      if(nums[i] == nums[i+1] && nums[i] == nums[i+2])
+        return false;
+    }
+    return true;
+  }
+
+//Ques18 - has271
+public boolean has271(int[] nums) {
+  for(int i=0; i<nums.length-2; i++)
+  {
+    if(nums[i+1]==nums[i]+5 && Math.abs(nums[i+2]-(nums[i]-1))<=2)
+      return true;
+  }
+  return false;
+}
+  
+  
+  

@@ -1,0 +1,269 @@
+//Ques1 - firstLast6
+public boolean firstLast6(int[] nums) {
+  return (nums[0]==6 || nums[nums.length-1]==6);
+}
+
+//Ques2 - sameFirstLast
+public boolean sameFirstLast(int[] nums) {
+  if(nums.length == 0)
+    return false;
+  return (nums[0] == nums[nums.length-1]);
+}
+
+//Ques3 - makePi
+public int[] makePi() {
+  int [] pi = {3 , 1, 4};
+  return pi;
+}
+
+//Ques4 - commonEnd
+public boolean commonEnd(int[] a, int[] b) {
+    // if(a.length == 0 || b.length == 0)
+    //   return false;
+    
+    return (a[0] == b[0] || a[a.length-1] == b[b.length-1]);
+}
+
+//Ques5 - sum3
+public int sum3(int[] nums) {
+    return nums[0]+nums[1]+nums[2];
+}
+
+//Ques6 - rotateLeft3
+public int[] rotateLeft3(int[] nums) {
+    int temp = nums[0];
+    nums[0] = nums[1];
+    nums[1] = nums[2];
+    nums[2] = temp;
+    return nums;
+}
+
+//Ques7 - reverse3
+public int[] reverse3(int[] nums) {
+    int arr[] = new int[3];
+    arr[0] = nums[2];
+    arr[1] = nums[1];
+    arr[2] = nums[0];
+    return arr;
+}
+
+//Ques8 - maxEnd3
+public int[] maxEnd3(int[] nums) {
+    int large = (nums[0] > nums[2])? nums[0] : nums[2];
+    nums[0]=large;
+    nums[1]=large;
+    nums[2]=large;
+    return nums;
+}
+
+//Ques9 - sum2
+public int sum2(int[] nums) {
+    if(nums.length<2)
+    {
+      if(nums.length == 1)
+        return nums[0];
+      return 0;
+    }
+    
+    return nums[0]+nums[1];
+}
+
+//Ques10 - middleWay
+public int[] middleWay(int[] a, int[] b) {
+    int arr[] = new int[2];
+    arr[0] = a[1];
+    arr[1] = b[1];
+    return arr;
+}
+
+//Ques11 - makeEnds
+public int[] makeEnds(int[] nums) {
+    int arr[] = new int[2];
+    arr[0] = nums[0];
+    arr[1] = nums[nums.length-1];
+    return arr;
+}
+
+//Ques12 - has23
+public boolean has23(int[] nums) {
+    return (nums[0] == 2 || nums[0] == 3 || nums[1] == 2 || nums[1] == 3);
+}
+
+//Ques13 - no23
+public boolean no23(int[] nums) {
+    return !(nums[0] == 2 || nums[0] == 3 || nums[1] == 2 || nums[1] == 3);
+}
+
+public boolean no23(int[] nums) {
+   return (nums[0] != 2 && nums[0] != 3 && nums[1] != 2 && nums[1] != 3);
+}
+
+//Ques14 - makeLast
+public int[] makeLast(int[] nums) {
+    int arr[] = new int[nums.length*2];
+    arr[arr.length-1] = nums[nums.length-1];
+    return arr;
+}
+
+//Ques15 - double23
+public boolean double23(int[] nums) {
+    if(nums.length < 2)
+      return false;
+    return ((nums[0]==2 && nums[1]==2) || (nums[0]==3 && nums[1]==3));
+}
+
+//Ques16 - fix23
+public int[] fix23(int[] nums) {
+    if(nums[1] == 3 && nums[0] == 2)
+      nums[1] = 0;
+    else if(nums[2] == 3 && nums[1] == 2)
+      nums[2] = 0;
+    return nums;
+}
+
+//Ques17 - start1
+public int start1(int[] a, int[] b) {
+    int count = 0;
+    if(a.length>0 && a[0]==1)
+      count++;
+    if(b.length>0 && b[0]==1)
+      count++;
+    return count;
+}
+
+//Ques18 - biggerTwo
+public int[] biggerTwo(int[] a, int[] b) {
+    int sum1 = a[0] + a[1];
+    int sum2 = b[0] + b[1];
+    return (sum1>=sum2)?a:b;
+}
+
+//Ques19 - makeMiddle
+public int[] makeMiddle(int[] nums) {
+    if(nums.length <= 2)
+      return nums;
+    int mid = nums.length/2;
+    int arr[] = new int[2];
+    arr[0]=nums[mid-1];
+    arr[1]=nums[mid];
+    return arr;
+}
+
+//Ques20 - plusTwo
+public int[] plusTwo(int[] a, int[] b) {
+    int arr[] = new int[4];
+    arr[0] = a[0];
+    arr[1] = a[1];
+    arr[2] = b[0];
+    arr[3] = b[1];
+    return arr;
+}
+
+//Ques21 - swapEnds
+public int[] swapEnds(int[] nums) {
+    if(nums.length<2)
+      return nums;
+    int temp = nums[0];
+    nums[0] = nums[nums.length -1];
+    nums[nums.length -1] = temp;
+    return nums;
+}
+
+//Ques22 - midThree
+public int[] midThree(int[] nums) {
+    if(nums.length<3)
+      return new int[0];
+    
+    int mid = nums.length/2;
+    int arr[] = new int[3];
+    arr[0]=nums[mid-1];
+    arr[1]=nums[mid];
+    arr[2]=nums[mid+1];
+    return arr;
+}
+
+//Ques23 - maxTriple
+public int maxTriple(int[] nums) {
+    int mid = nums.length/2;
+    int max = (nums[0] > nums[mid])?nums[0]:nums[mid];
+    return (max > nums[nums.length-1])?max:nums[nums.length-1];
+}
+
+//Ques24 - frontPiece
+public int[] frontPiece(int[] nums) {
+    if(nums.length<=2)
+      return nums;
+    int arr[] = new int[2];
+    arr[0] = nums[0];
+    arr[1] = nums[1];
+    return arr;
+}
+
+//Ques25 - unlucky1
+public boolean unlucky1(int[] nums) {
+    if(nums.length<=1)
+      return false;
+    
+    if(nums.length == 2 && nums[0]==1 && nums[1]==3)
+      return true;
+      
+    if((nums[0]==1 && nums[1]==3) || (nums[1]==1 && nums[2]==3) || (nums[nums.length-2]==1 && nums[nums.length-1]==3))
+      return true;
+    else
+      return false;
+}
+
+//Ques26 - make2
+public int[] make2(int[] a, int[] b) {
+    int arr[] = new int[2];
+    if(a.length == 1)
+    {
+      arr[0]=a[0];
+      arr[1]=b[0];
+      return arr;
+    }
+    else if(a.length == 0)
+    {
+      arr[0]=b[0];
+      arr[1]=b[1];
+      return arr;
+    }
+    else
+    {
+      arr[0]=a[0];
+      arr[1]=a[1];
+      return arr;
+    }
+}
+
+//Ques27 - front11
+public int[] front11(int[] a, int[] b) {
+    if(a.length != 0 && b.length != 0)
+    {
+      int arr[] = new int[2];
+      arr[0] = a[0];
+      arr[1] = b[0];
+      return arr;
+    }
+    
+    if(a.length==0)
+    {
+      if(b.length != 0)
+      {
+        int arr[] = new int[1];
+        arr[0] = b[0];
+        return arr;
+      }
+      else
+        return new int[0];
+    }
+    else
+    {
+      int arr[] = new int[1];
+      arr[0]=a[0];
+      return arr;
+    }
+}
+  
+  
+
