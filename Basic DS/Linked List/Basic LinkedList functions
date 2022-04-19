@@ -1,0 +1,343 @@
+//1.Add last
+//2.Display a linked list
+//3.Remove first
+//4.Get value in LL
+//5.Add first
+//6.Add at index
+//7.Remove last
+//8.Remove at index
+
+//Indexing is 0 - based ie Indexing starts from zero (0)
+
+import java.io.*;
+// import java.util.*;
+
+public class Main {
+  public static class Node {
+    int data;
+    Node next;
+  }
+
+  public static class LinkedList {
+    Node head;
+    Node tail;
+    int size;
+
+    // 1.
+    void addLast(int val) {
+      Node node = new Node();
+      node.data = val;
+      node.next = null;
+
+      if (size == 0) {
+        head = node;
+        tail = node;
+      }
+
+      else {
+        tail.next = node;
+        tail = node;
+      }
+      size++;
+    }
+
+    // 2.
+    public int size() {
+      // return size;
+
+      int count = 0;
+      for (Node temp = head; temp != null; temp = temp.next) {
+        count++;
+      }
+      return count;
+    }
+
+    public void display() {
+      if (size == 0) {
+        return;
+      }
+      // Node temp = new Node();
+      // temp = head;
+      // for (int i = 0; i < size; i++) {
+      //   System.out.print(temp.data + " ");
+      //   temp = temp.next;
+      // }
+
+      for(Node temp = head; temp !=null; temp = temp.next)
+      {
+        System.out.print(temp.data+" ");
+      }
+      System.out.println();
+    }
+
+    // 3.
+    public void removeFirst(){
+      if(size == 0)
+      {
+          System.out.println("List is empty");
+          return;
+      }
+      
+      head = head.next;
+      size--;
+    }
+
+    //4. Get first, get at index and get last
+    public int getFirst(){
+      if(size==0)
+      {
+          System.out.println("List is empty");
+          return -1;
+      }
+      
+      return head.data;
+    }
+
+    public int getLast(){
+      if(size==0)
+      {
+          System.out.println("List is empty");
+          return -1;
+      }
+      
+      return tail.data;
+    }
+
+    public int getAt(int idx){
+      if(size == 0)
+      {
+          System.out.println("List is empty");
+          return -1;
+      }
+      
+      if(idx<0 || idx>=size)
+      {
+          System.out.println("Invalid arguments");
+          return -1;
+      }
+      
+      Node temp = head;
+      for(int i=0; i<=idx-1; i++)
+      {
+          temp = temp.next;
+      }
+      return temp.data;
+    }
+
+    //5.
+    public void addFirst(int val) {
+      // write your code here
+      Node node = new Node();
+      node.data = val;
+      node.next = null;
+      if(size == 0)
+      {
+          head = tail = node;
+      }
+      
+      else {
+          node.next = head;
+          head = node;
+      }
+      size++;
+    }
+
+    //6.
+    public void addAt(int idx, int val){
+      // write your code here
+      if(idx < 0 || idx>size)  //galat index
+      {
+          System.out.println("Invalid arguments");
+      }
+      
+      else if(idx == 0)
+      {
+          addFirst(val);
+      }
+      
+      else if(idx == size)
+      {
+          addLast(val);
+      }
+      
+      else {
+        
+        Node node = new Node();
+        node.data = val;
+        //Method 1
+        //   Node prev = head;
+        //   Node curr = head.next;
+        
+        //Method 2
+        // Node prev = new Node();
+        // Node curr = head;
+        
+        //Method 3
+        Node temp = head;
+        
+          for(int i=0; i<idx-1; i++)
+          {
+              //1. i<idx-1
+            //   curr = curr.next;
+            //   prev = prev.next;
+            
+            //2. i<idx
+            // prev = curr;
+            // curr = curr.next;
+            
+            //3.
+            temp = temp.next;
+          }
+        
+        //1 2 method  
+        //   prev.next = node;
+        //   node.next = curr;
+        
+        //3
+        node.next = temp.next;
+        temp.next = node;
+        size++;
+      }      
+    }
+
+    //7.
+    private Node getNodeAt(int idx)
+    {
+        if(size == 0)
+        {
+            System.out.println("List is empty");
+            return new Node();
+        }
+        
+        else if(idx < 0 || idx >= size)
+        {
+            System.out.println("Invalid arguments");
+            return new Node();
+        }
+        else {
+            Node temp = head;
+            for(int i=0; i<idx; i++) {
+                temp = temp.next;
+            }
+            return temp;
+        }
+    }
+    
+    public void removeLast(){
+      if(size == 0)
+      {
+          System.out.println("List is empty");
+      }
+      
+      if(size == 1)
+      {
+          head = tail = null;
+      }
+      
+      else {
+        //   Node temp = head;
+        //   while(temp.next.next != null)
+        //   {
+        //       temp = temp.next;
+        //   }
+            Node temp = getNodeAt(size-2);
+            
+            tail = temp;
+            tail.next = null;
+      }
+      size--;
+    }
+
+    //8.
+    public void removeAt(int idx) {
+      if(size == 0)
+      {
+            System.out.println("List is empty");
+            return;
+      }
+      
+      else if(idx < 0 || idx >= size)
+      {
+            System.out.println("Invalid arguments");
+            return;
+      }
+      
+      else if(idx == 0)
+      {
+          removeFirst();
+      }
+      
+      else if(idx == size-1)
+      {
+          removeLast();
+      }
+      
+      else {
+            Node temp = getNodeAt(idx-1);
+            temp.next = temp.next.next;
+            size--;
+      }
+    }
+  }
+
+  public static void testList(LinkedList list) {
+    for (Node temp = list.head; temp != null; temp = temp.next) {
+      System.out.println(temp.data);
+    }
+    System.out.println(list.size);
+
+    if (list.size > 0) {
+      System.out.println(list.tail.data);
+    }
+  }
+
+  public static void main(String[] args) throws Exception {
+    // BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    // LinkedList list = new LinkedList();
+
+    // String str = br.readLine();
+    // while (str.equals("quit") == false) {
+    //   if (str.startsWith("addLast")) {
+    //     int val = Integer.parseInt(str.split(" ")[1]);
+    //     list.addLast(val);
+    //   }
+    //   str = br.readLine();
+    // }
+
+    // testList(list);
+
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    LinkedList list = new LinkedList();
+
+    String str = br.readLine();
+    while(str.equals("quit") == false){
+      if(str.startsWith("addLast")){
+        int val = Integer.parseInt(str.split(" ")[1]);
+        list.addLast(val);
+      } else if(str.startsWith("size")){
+        System.out.println(list.size());
+      } else if(str.startsWith("display")){
+        list.display();
+      } else if(str.startsWith("removeFirst")){
+        list.removeFirst();
+      } else if(str.startsWith("getFirst")){
+        int val = list.getFirst();
+        if(val != -1){
+          System.out.println(val);
+        }
+      } else if(str.startsWith("getLast")){
+        int val = list.getLast();
+        if(val != -1){
+          System.out.println(val);
+        }
+      } else if(str.startsWith("getAt")){
+        int idx = Integer.parseInt(str.split(" ")[1]);
+        int val = list.getAt(idx);
+        if(val != -1){
+          System.out.println(val);
+        }
+      }
+      str = br.readLine();
+    }
+  }
+}
