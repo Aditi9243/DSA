@@ -6,6 +6,8 @@
 //6.Add at index
 //7.Remove last
 //8.Remove at index
+//9.Reverse linked list data iteratively
+//10.Reverve linked list pointer iteratively
 
 //Indexing is 0 - based ie Indexing starts from zero (0)
 
@@ -277,6 +279,70 @@ public class Main {
             temp.next = temp.next.next;
             size--;
       }
+    }
+
+    //9.
+    public void reverseDI() {
+      // write your code here
+      if(size == 0)
+        return;
+        
+      int i = 0;
+      int j = size-1;
+      while(i<j)
+      {
+          Node left = getNodeAt(i);
+          Node right = getNodeAt(j);
+          
+          //Swapping
+          int temp = left.data;
+          left.data = right.data;
+          right.data = temp;
+          
+          i++;
+          j--;
+      }
+    }
+
+    //9.
+    public void reverseDI() {
+      // write your code here
+      if(size == 0)
+        return;
+        
+      int i = 0;
+      int j = size-1;
+      while(i<j)
+      {
+          Node left = getNodeAt(i);
+          Node right = getNodeAt(j);
+          
+          //Swapping
+          int temp = left.data;
+          left.data = right.data;
+          right.data = temp;
+          
+          i++;
+          j--;
+      }
+    }
+
+    //10.
+    public void reversePI(){
+      // write your code here
+      Node prev = null;
+      Node curr = head;
+      while(curr != null)
+      {
+        Node frw = curr.next;
+        curr.next = prev;
+        prev = curr;
+        curr = frw;
+      }
+        
+      Node temp = head;
+      head = tail;
+      tail = temp;
     }
   }
 
