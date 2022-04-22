@@ -9,6 +9,10 @@
 //8.K Reverse In Linked List
 //9.Display Reverse (recursive) - Linked List
 //10.Reverse Linked List (pointer - Recursive)
+//11.Is Linked List A Palindrome?
+//12.Fold A Linked List
+//13.Intersection Point Of Linked Lists
+//14.Add Two Linked Lists
 
 import java.io.*;
 import java.util.*;
@@ -451,7 +455,103 @@ public class Main {
       this.tail = temp;
     }
 
+    //11.
+    private boolean IsPalindromeHelper(Node right) {
+      if(right == null)
+        return true;
+        
+        boolean recAns = IsPalindromeHelper(right.next);
+        if(recAns)
+        {
+            if(right.data == left.data)
+            {
+                left = left.next;
+                return true;
+            }
+            else
+                return false;
+        }
+        else
+            return false;
+
+            // if(recAns == false)
+            // {
+            //     return false;
+            // }
+            // if(left.data != right.data)
+            // {
+            //     return false;
+            // }
+            // else
+            // {
+            //     pleft = pleft.next;
+            //     return true;
+            // }
+    }
     
+    Node left;
+    public boolean IsPalindrome() {
+      // write your code here
+      left = head;  //this.head
+      return IsPalindromeHelper(left);
+    }
+
+    //12.
+    private void foldHelper(Node right, int count) {
+      if(right == null)
+          return;
+      
+      foldHelper(right.next, count+1);
+      if(count > size/2)
+      {
+          Node temp = left.next;
+          left.next = right;
+          right.next = temp;
+          left = temp;
+      }
+      else if(count == size/2)
+      {
+          tail = right;
+          tail.next = null;
+      }
+
+      // right.next = left.next;
+      // left.next = right;
+      // left = right.next;
+    }
+
+    Node left;
+    public void fold() {
+      // write your code here
+      left = this.head;
+      foldHelper(left, 0);
+      
+    }
+
+    //13.
+    public static int findIntersection(LinkedList one, LinkedList two){
+      // write your code here
+      Node c1 = one.head;
+      Node c2 = two.head;
+      int d = Math.abs(one.size - two.size);
+      if(one.size > two.size)
+      {
+          for(int i=0; i<d; i++)
+            c1 = c1.next;
+      }
+      else
+      {
+          for(int i=0; i<d; i++)
+            c2 = c2.next;
+      }
+      
+      while(c1 != c2)
+      {
+          c1=c1.next;
+          c2=c2.next;
+      }
+      return c1.data;
+    }
   }
 
   public static void main(String[] args) throws Exception {
