@@ -35,6 +35,32 @@ class Solution {
         // head = odd.next;
         // return head;  
         
-        
+        public ListNode oddEvenList(ListNode head) {
+            ListNode odd = new ListNode(0), o = odd;
+            ListNode even = new ListNode(0), e = even;
+            int count = 1;
+            
+            while(head != null)
+            {
+                if(count % 2 == 0)
+                {
+                    ListNode node = new ListNode(head.val);
+                    e.next = node;
+                    e = e.next;
+                }
+                else 
+                {
+                    ListNode node = new ListNode(head.val);
+                    o.next = node;
+                    o = o.next;
+                }
+                head = head.next;
+                count++;
+            }
+            
+            o.next = even.next;
+            head = odd.next;
+            return head;        
+        }
     }
 }
