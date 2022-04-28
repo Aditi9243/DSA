@@ -1,0 +1,33 @@
+class Solution {
+    public int maximumDifference(int[] nums) {
+        int maxDiff = -1;
+        for(int i=0; i<nums.length; i++)
+        {
+            for(int j=i+1; j<nums.length; j++)
+            {
+                if(nums[i] > nums[j])   continue;
+                
+                int d = nums[j] - nums[i];
+                if(d > maxDiff && d != 0)
+                {
+                    maxDiff = d;
+                }
+            }
+        }
+        return maxDiff;
+    }
+}
+
+//Another method - BETTER   
+class Solution {
+    public int maximumDifference(int[] nums) {
+        int diff = -1, min = nums[0];
+        for(int i = 1; i<nums.length; i++)
+        {
+            if(nums[i] > min)
+                diff = Math.max(diff, nums[i]-min);
+            min = Math.min(min, nums[i]);
+        }
+        return diff;
+    }
+}
