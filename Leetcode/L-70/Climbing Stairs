@@ -1,0 +1,57 @@
+//Failed case - 44 (TLE)
+class Solution {
+    public int climbStairs(int n) {
+        if(n == 0) return 1;
+        if(n < 0) return 0;
+        
+        int count = 0;
+        count = climbStairs(n-1) + climbStairs(n-2);
+        return count;
+    }
+}
+
+//DP
+class Solution {
+    public int climbStairs(int n) {
+        if(n == 0) return 1;
+        if(n < 0) return 0;
+        
+        int dp[] = new int[n+1];
+        dp[0] = 1;
+        dp[1] = 1;
+        
+        for(int i = 2; i<dp.length; i++)
+        {
+            dp[i] = dp[i-1] + dp[i-2];
+        }
+        return dp[n];
+    }
+}
+
+//More optimized
+class Solution {
+    public int climbStairs(int n) {
+        if(n <= 2) return n;
+        
+        int ways = 0;
+        int oneStepBefore = 1;  //dp[1]
+        int twoStepBefore = 1;  //dp[0]
+        
+        for(int i = 2; i<=n; i++)
+        {
+            ways = oneStepBefore + twoStepBefore;
+            twoStepBefore = oneStepBefore;  //dp[0] = dp[1];
+            oneStepBefore = ways; //dp[1] = dp[i];
+        }
+        return ways;
+    }
+}
+//EXPLAINATION :- 
+// "all_ways" corresponds to the number of solutions to get to the point [n].
+// And "one_step_before" refers to the number of solutions until the point [n-1],
+// "two_steps_before" refers to the number of solution until the point [n-2].
+
+// From the point [n-1], we take one step to reach the point [n].
+// From the point [n-2], we take a two-steps leap to reach the point [n].
+
+// So it goes without saying that the total number of solution to reach the point [n] should be [n-1] + [n-2].
