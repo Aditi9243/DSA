@@ -1,4 +1,4 @@
-//Failed case - 44 (TLE)
+//Failed case - n=44 (TLE)
 class Solution {
     public int climbStairs(int n) {
         if(n == 0) return 1;
