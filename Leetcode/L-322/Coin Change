@@ -1,0 +1,45 @@
+//min number of coins required to reach the amount
+\
+class Solution {
+    public int coinChange(int[] coins, int amount) {
+        if(amount < 0) return 0;
+        int dp[] = new int[amount+1];
+        
+        for(int i = 1; i<dp.length; i++)
+        {
+            int min = Integer.MAX_VALUE;
+            for(int j=0; j<coins.length; j++)
+            {
+                if(i-coins[j] >= 0 && dp[i-coins[j]] >= 0)
+                    min = (dp[i-coins[j]] < min) ? dp[i-coins[j]] : min;
+            }
+            
+            dp[i] = (min == Integer.MAX_VALUE) ? -1 : min+1;
+        }
+        
+        // for(int ele : dp)
+        //     System.out.print(ele + " ");
+        //dp :- 0 1 1 2 2 1 2 2 3 3 2 3 
+        
+        return dp[amount];
+    }
+}
+
+
+class Solution {
+    public int min = Integer.MAX_VALUE;
+    public int coinChange(int[] coins, int amount) {
+        helper(coins, amount, coins.length-1, 0);        
+        return min = (min==Integer.MAX_VALUE) ? -1 : min;
+    }
+    
+    public void helper(int [] coins, int amount, int i, int count)
+    {
+        if(i<0 || amount<0) return;
+        if(amount == 0) min = Math.min(min, count);
+        
+        helper(coins, amount-coins[i], i, count+1); //coin selected
+        helper(coins, amount, i-1, count); //coin not selected
+    }
+}
+
