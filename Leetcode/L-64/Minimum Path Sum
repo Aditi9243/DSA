@@ -1,4 +1,4 @@
-//Error - TLE
+//Recursion (Error - TLE)
 class Solution {
     public int min = Integer.MAX_VALUE;
     public int minPathSum(int[][] grid) {
@@ -26,16 +26,68 @@ class Solution {
     }
 }
 
-//DP - wrong solution****
+//Another way of recursion
+class Solution {
+    public int minPathSum(int[][] grid) {
+        int n = grid.length;    //height
+        int m = grid[0].length; //width
+        return helper(grid, n-1, m-1);
+    }
+    
+    public int helper(int [][]grid, int row, int col)
+    {
+        if(row == 0 && col == 0)
+            return grid[row][col];
+        
+        if(row == 0 && col != 0)
+            return grid[row][col] + helper(grid, row, col-1);
+        
+        if(row != 0 && col == 0)
+            return grid[row][col] + helper(grid, row-1, col);
+                
+        return grid[row][col] + Math.min(helper(grid, row-1, col), helper(grid, row, col-1));
+    }
+}
+
+//Memoization
 class Solution {
     public int minPathSum(int[][] grid) {
         int n = grid.length;    //height
         int m = grid[0].length; //width
         int dp[][] = new int[n][m];
         
-        for(int i=0; i<n; i++)
+        return helper(grid, n-1, m-1, dp);
+    }
+    
+    public int helper(int [][]grid, int row, int col, int [][]dp)
+    {
+        if(row == 0 && col == 0)
+            return grid[row][col];
+        
+        if(dp[row][col] != 0)
+            return dp[row][col];
+        
+        if(row == 0 && col != 0)
+            return grid[row][col] + helper(grid, row, col-1, dp);
+        
+        if(row != 0 && col == 0)
+            return grid[row][col] + helper(grid, row-1, col, dp);
+                
+        return grid[row][col] + Math.min(helper(grid, row-1, col, dp), helper(grid, row, col-1, dp));
+        
+    }
+}
+
+//DP
+class Solution {
+    public int minPathSum(int[][] grid) {
+        int n = grid.length;    //height
+        int m = grid[0].length; //width
+        int dp[][] = new int[n][m];
+        
+        for(int i=0; i<n; i++)  //row
         {
-            for(int j=0; j<m; j++)
+            for(int j=0; j<m; j++)  //col
             {
                 if(i==0 && j==0)
                 {
@@ -45,20 +97,44 @@ class Solution {
                 else if(i==0 && j!=0)
                 {
                     //top row
-                    dp[i][j] = grid[i][j-1] + grid[i][j];
+                    dp[i][j] = dp[i][j-1] + grid[i][j];
                 }
                 else if(j==0 && i!=0)
                 {
                     //first column
-                    dp[i][j] = grid[i-1][j] + grid[i][j];
+                    dp[i][j] = dp[i-1][j] + grid[i][j];
                 }
                 else
                 {
-                    dp[i][j] = Math.min(grid[i-1][j], grid[i][j-1]) + grid[i][j];
+                    dp[i][j] = Math.min(dp[i-1][j], dp[i][j-1]) + grid[i][j];
                 }
             }
         }
         
         return dp[n-1][m-1];
+    }
+}
+
+//Another way of writing dp program
+class Solution {
+    public int minPathSum(int[][] grid) {
+        int n = grid.length;    //height
+        int m = grid[0].length; //width
+        
+        for(int i=1; i<n; i++)  //first col
+            grid[i][0] += grid[i-1][0];
+        
+        for(int j=1; j<m; j++)  //first row
+            grid[0][j] += grid[0][j-1];
+        
+        for(int i=1; i<n; i++)  //row
+        {
+            for(int j=1; j<m; j++)  //col
+            {
+                    grid[i][j] += Math.min(grid[i-1][j], grid[i][j-1]);
+            }
+        }
+        
+        return grid[n-1][m-1];
     }
 }

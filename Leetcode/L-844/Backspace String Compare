@@ -26,3 +26,31 @@ class Solution {
         return ans;
     }
 }
+
+//Using stack
+class Solution {
+    public boolean backspaceCompare(String s, String t) {
+        s = correctString(s);
+        t = correctString(t);
+        return (s.equals(t));
+    }
+    
+    public String correctString(String str)
+    {
+        Stack<Character> st = new Stack<>();
+        String ans = "";
+        for(char ch : str.toCharArray())
+        {
+            if(ch !='#')
+                st.push(ch);
+            else if(!st.isEmpty())
+                st.pop();      
+        }
+        
+        while(st.size() > 0)
+        {
+            ans += st.pop();
+        }
+        return ans;
+    }
+}
