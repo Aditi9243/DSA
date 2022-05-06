@@ -1,0 +1,36 @@
+class Solution {
+    public String removeDuplicates(String s, int k) {
+        Deque<Integer> intStk = new ArrayDeque<>();
+        Deque<Character> charStk = new ArrayDeque<>();
+        
+        for(char c : s.toCharArray())
+        {
+            if(charStk.isEmpty() || c != charStk.peek())
+            {
+                charStk.push(c);
+                intStk.push(1);
+            }
+            else
+            {
+                int count = (intStk.pop() + 1) % k;
+                if(count == 0)
+                    charStk.pop();
+                else
+                    intStk.push(count);
+            } 
+        }
+        
+        String str = "";
+        while(!intStk.isEmpty())
+        {
+            int count = intStk.pop();
+            char ch = charStk.pop();
+            while(count--> 0)
+            {
+                str = ch + str;
+            }
+        }
+        
+        return str;
+    }
+}
