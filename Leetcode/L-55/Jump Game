@@ -1,0 +1,117 @@
+//Error - TLE
+class Solution {
+    public boolean canJump(int[] nums) {
+        if(nums.length == 1 && nums[0] == 0)
+            return true;
+        return solution(nums, 0);
+    }
+    
+    public boolean solution(int[] nums, int start)
+    {
+        if(start >= nums.length-1)
+            return true;
+        
+        boolean ans = false;
+        for(int jump=1; jump<=nums[start]; jump++)
+        // for(int jump=nums[start]; jump>0; jump--)
+        {
+            ans = solution(nums, start+jump);
+            if(ans)
+                break;
+        }
+        
+        return ans;
+    }
+}
+
+//dp
+class Solution {
+    public boolean canJump(int[] nums) {
+        if(nums.length == 1 && nums[0] == 0)
+            return true;
+        int []dp = new int[nums.length];
+        Arrays.fill(dp, -1);
+        return solution(nums, 0, dp);
+    }
+    
+    public boolean solution(int[] nums, int start, int[] dp)
+    {
+        if(start >= nums.length-1)
+            return true;
+        
+        if(dp[start] != -1)
+        {
+            if(dp[start]==1)
+                return true;
+            else
+                return false;
+        }
+        
+        boolean ans = false;
+        for(int jump=1; jump<=nums[start]; jump++)
+        // for(int jump=nums[start]; jump>0; jump--)
+        {
+            ans = solution(nums, start+jump, dp);
+            if(ans)
+                break;
+        }
+        dp[start] = (ans)?1:0;
+        return ans;
+    }
+}
+
+//Iterative
+class Solution {
+    public boolean canJump(int[] nums) {
+        if(nums.length == 1 && nums[0] == 0)
+            return true;
+        int steps = 0;
+        for(int i=nums.length-1; i>=0; i--)
+        {
+            if(steps <= nums[i])
+                steps=1;
+            else
+                steps++;
+        }
+        return (steps==1);
+    } 
+}
+
+//greedy
+//Aim: Looking from the start and selecting the locally optimum in the hope of reaching global optimum
+class Solution {
+    public boolean canJump(int[] nums) {
+        int far = 0;
+        for(int i=0; i<nums.length; i++)
+        {
+            if(far<i)
+                return false;
+            far = Math.max(i+nums[i], far);
+        }
+        return true;
+    } 
+}
+
+//DP
+//Aim: Looking from the end and at each point ahead checking the best possible way to reach the end
+class Solution {
+    public boolean canJump(int[] nums) {
+        int n = nums.length;
+        boolean[] dp = new boolean[n];
+        dp[n-1] = true;
+        
+        for(int i=n-2; i>=0; i--)
+        {
+            for(int jump=1; jump<=nums[i] && i+jump<n; jump++)
+            {
+                if(dp[i+jump] == true)
+                {
+                    dp[i]=true;
+                    break;
+                }
+            }
+        }
+        
+        return dp[0];
+    } 
+}
