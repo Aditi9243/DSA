@@ -1,3 +1,74 @@
+//Brute force
+//Time : O(n^2)
+//space : O(1)
+class Solution {
+    public int[] productExceptSelf(int[] nums) {
+        int n = nums.length;
+        int []ans = new int[n];
+        
+        int prod = 1;
+        for(int i=0; i<n; i++)
+        {
+            prod = 1;
+            for(int j=0; j<n; j++)
+                if(i != j) prod *= nums[j];
+            ans[i] = prod;
+        }
+        
+        return ans;
+    }
+}
+
+//Changing original array
+//Time : O(n)
+//space : O(1)
+class Solution {
+    public int[] productExceptSelf(int[] nums) {
+        int n = nums.length;
+        int prod = 1;
+        int count0 = 0;
+        
+        for(int i=0; i<n; i++)
+        {
+            if(nums[i] == 0) 
+                count0++;
+        }
+        
+        if(count0 == 0)
+        {
+            for(int i=0; i<n; i++)
+                prod *= nums[i];
+            
+            for(int i=0; i<n; i++)
+                nums[i] = prod/nums[i];
+            
+            return nums;
+        }
+        
+        else if(count0 == 1)
+        {
+            for(int i=0; i<n; i++)
+                if(nums[i] != 0)
+                    prod *= nums[i];
+            
+            for(int i=0; i<n; i++)
+            {
+                if(nums[i] == 0)
+                   nums[i] = prod;
+                else
+                    nums[i]=0;
+            }
+            return nums;    
+        }
+        
+        else 
+            return new int[n];
+    }
+}
+
+//Using separate array
+//Time : O(n)
+//space : O(n)
 class Solution {
     public int[] productExceptSelf(int[] nums) {
         int n = nums.length;
@@ -26,3 +97,27 @@ class Solution {
     }
 }
 
+//Best approach
+//Time : O(n)
+//space : O(1)
+class Solution {
+    public int[] productExceptSelf(int[] nums) {
+        int n = nums.length;
+        int []ans = new int[n];
+        
+        ans[0] = 1;
+        for(int i=1; i<n; i++)
+        {
+            ans[i] = ans[i-1] * nums[i-1];
+        }
+        
+        int right = 1;
+        for(int i=n-1; i>=0; i--)
+        {
+            ans[i] = right * ans[i];
+            right *= nums[i];
+        }
+        
+        return ans;
+    }
+}
