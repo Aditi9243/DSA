@@ -1,0 +1,39 @@
+//Backtracking
+//O(2^n)
+class Solution {
+    public List<List<String>> partition(String s) {
+        List<List<String>> ans = new ArrayList<>();
+        solution(ans, new ArrayList<>(), s, 0);
+        return ans;
+    }
+    
+    public void solution(List<List<String>> ans, List<String> temp, String str, int start)
+    {
+        if(start == str.length())
+            ans.add(new ArrayList<>(temp));
+        
+        for(int i = start; i<str.length(); i++)
+        {
+            if(isPalindrome(str, start, i))
+            {
+                temp.add(str.substring(start,i+1));
+                solution(ans, temp, str, i+1);
+                temp.remove(temp.size()-1);
+            }
+        }
+    }
+    
+    public boolean isPalindrome(String str, int start, int end)
+    {
+        //if(start == end) return true; - no need
+        while(start < end)
+        {
+            if(str.charAt(start) != str.charAt(end))
+                return false;
+            start++;
+            end--;
+        }
+        
+        return true;
+    }
+}

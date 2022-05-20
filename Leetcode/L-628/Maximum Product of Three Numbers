@@ -18,3 +18,70 @@ class Solution {
         return (a>b)?a:b;
     }
 }
+
+//Finding 3 max values and 2 min values - More optimized
+class Solution {
+    public int maximumProduct(int[] nums) {
+        int max1 = Integer.MIN_VALUE, max2 = Integer.MIN_VALUE, max3 = Integer.MIN_VALUE;
+        int min1 = Integer.MAX_VALUE, min2 = Integer.MAX_VALUE;
+        
+        for(int num : nums){
+            if(num > max1)
+            {
+                max3 = max2;
+                max2 = max1;
+                max1 = num;
+            }
+            else if(num > max2)
+            {
+                max3 = max2;
+                max2 = num;
+            }
+            else if(num > max3)
+                max3 = num;
+            
+            if(num < min1)
+            {
+                min2 = min1;
+                min1 = num;
+            }
+            else if(num < min2)
+                min2 = num;
+        }
+        
+        return Math.max(max1*max2*max3, min1*min2*max1);
+    }
+}
+
+//Using heap - Worst time and space complexity
+class Solution {
+    public int maximumProduct(int[] nums) {
+        PriorityQueue<Integer> maxPQ = new PriorityQueue<>();   //min type pq
+        PriorityQueue<Integer> minPQ = new PriorityQueue<>(Collections.reverseOrder()); //max type
+        
+        for(int num : nums){
+            minPQ.add(num);
+            maxPQ.add(num);
+            
+            if(maxPQ.size() > 3)
+                maxPQ.remove();
+            
+            if(minPQ.size() > 2)
+                minPQ.remove();
+        }
+        
+        int max = 0, prod = 1;
+        while(!maxPQ.isEmpty())
+        {
+            max = maxPQ.remove();
+            prod *= max;
+        }
+        
+        while(!minPQ.isEmpty())
+        {
+            max *= minPQ.remove();  //initially max will contain max value
+        }
+        
+        return Math.max(prod, max);
+    }
+}
