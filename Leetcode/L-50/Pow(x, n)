@@ -1,0 +1,25 @@
+//Using inbuilt function
+class Solution {
+    public double myPow(double x, int n) {
+        double ans = Math.pow(x,n);
+        return ans;
+    }
+}
+
+
+
+// if(n == 0)
+//     return 1;
+// if(n < 0)
+// {
+//     n = -n;
+//     x = 1/x;
+// }
+// return ((n%2 == 0)? myPow(x*x, n/2) : x*myPow(x*x, n/2));
+        
+//double ans = myPow(x, n/2);
+//if(n%2 == 0)
+//    return ans * ans;
+//else
+//    // return x*ans*ans;
+//    return (n<0) ? 1/(x*ans*ans) : x*ans*ans;

@@ -1,0 +1,70 @@
+//Brute Force
+class Solution {
+    public int largestRectangleArea(int[] heights) {
+        int n = heights.length;
+        if(n==0)
+            return 0;
+        int maxArea = 0;
+        
+        int left[] = new int[n]; //fill left boundary
+        int right[] = new int[n]; //fill right boundary
+        
+        left[0] = 0;
+        right[n-1] = n;
+        
+        for(int i=1; i<n; i++)
+        {
+            int prev = i-1;
+            while(prev >= 0 && heights[prev]>=heights[i])
+                prev = left[prev];
+            left[i] = prev;
+        }
+        
+        for(int i=n-2; i>=0; i--)
+        {
+            int prev = i+1;
+            while(prev < n && heights[prev]>=heights[i])
+                prev = right[prev];
+            right[i] = prev;
+        }
+        
+        for(int i=0; i<n; i++)
+        {
+            int width = right[i] - left[i] -1;
+            maxArea = Math.max(maxArea, heights[i]*width);
+        }
+        
+        return maxArea;
+    }
+}
+
+//Using stack
+class Solution {
+    public int largestRectangleArea(int[] heights) {
+        int n = heights.length;
+        if(n==0)
+            return 0;
+        int maxArea = 0;
+        Stack<Integer> st = new Stack<>();
+        
+        for(int i=0; i<=n; i++)
+        {
+            int currHt = (i==n)?0:heights[i];
+            while(!st.isEmpty() && currHt<heights[st.peek()])
+            {
+                int top = st.pop();
+                int width = (st.isEmpty()) ? i : i-st.peek()-1;
+                int area = heights[top] * width;
+                maxArea = Math.max(area, maxArea);
+            }
+            st.push(i);
+        }
+        
+        return maxArea;
+    }
+}
+
+//Read this link for more details
+
+https://leetcode.com/problems/largest-rectangle-in-histogram/discuss/1727776/JavaC%2B%2B-Explanation-going-from-Brute-to-Optimal-Approach
+https://leetcode.com/problems/largest-rectangle-in-histogram/discuss/1728151/All-4-approaches-shown-oror-O(N2)-oror-O(NlogN)-oror-O(N)(two-pass)-oror-O(N)(one-pass)-with-explanation
