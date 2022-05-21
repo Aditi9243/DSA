@@ -1,5 +1,4 @@
 //min number of coins required to reach the amount
-\
 class Solution {
     public int coinChange(int[] coins, int amount) {
         if(amount < 0) return 0;
@@ -25,7 +24,7 @@ class Solution {
     }
 }
 
-
+//Recursive solution
 class Solution {
     public int min = Integer.MAX_VALUE;
     public int coinChange(int[] coins, int amount) {
