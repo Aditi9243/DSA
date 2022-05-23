@@ -1,0 +1,66 @@
+//Iterative (better than using hashmap)
+class Solution {
+    public boolean isAnagram(String s, String t) {
+        if(s.length() != t.length())
+            return false;
+        
+        int []alphabet = new int[26];
+        for(int i=0; i<s.length(); i++)
+        {
+            alphabet[s.charAt(i)-'a']++;
+            alphabet[t.charAt(i)-'a']--;
+        }
+        
+        for(int i : alphabet)
+            if(i!=0)
+                return false;
+        
+        return true;
+    }
+}
+
+//Another iterative way - better than prev one
+class Solution {
+    public boolean isAnagram(String s, String t) {
+        if(s.length() != t.length())
+            return false;
+        
+        int []alphabet = new int[26];
+        for(int i=0; i<s.length(); i++)
+        {
+            alphabet[s.charAt(i)-'a']++;
+        }
+        
+        for(int i=0; i<t.length(); i++)
+        {
+            if(alphabet[t.charAt(i)-'a'] == 0)
+                return false;
+            alphabet[t.charAt(i)-'a']--;
+        }
+        
+        return true;
+    }
+}
+
+//Using hashmap
+class Solution {
+    public boolean isAnagram(String s, String t) {
+        if(s.length() != t.length())
+            return false;
+        
+        HashMap<Character, Integer> str = new HashMap<>();
+        for(int i=0; i<s.length(); i++)
+        {
+            str.put(s.charAt(i),str.getOrDefault(s.charAt(i), 0)+1);
+            str.put(t.charAt(i),str.getOrDefault(t.charAt(i), 0)-1);
+        }
+        
+        for(char key : str.keySet())
+        {
+            if(str.get(key) != 0)
+                return false;
+        }
+        
+        return true;
+    }
+}
