@@ -1,0 +1,54 @@
+//Using stack
+class Solution {
+    public int longestValidParentheses(String s) {
+        if(s.length() == 0 || s == null)
+            return 0;
+        
+        Stack<Integer> st = new Stack<>();
+        st.push(-1);
+        int ans = 0;
+        for(int i=0; i<s.length(); i++)
+        {
+            if(s.charAt(i) == ')' && st.size()>1 && s.charAt(st.peek())=='(')
+            {
+                st.pop();
+                ans = Math.max(ans, i-st.peek());
+            }
+                
+            else
+            {
+                    st.push(i);
+            }
+        }
+        
+        return ans;
+    }
+}
+
+//Using dp
+class Solution {
+    public int longestValidParentheses(String s) {
+        if(s.length() == 0 || s == null)
+            return 0;
+        
+        int []dp = new int[s.length()];
+        int ans = 0;
+        int leftCount = 0;
+        for(int i=0; i<s.length(); i++)
+        {
+            if(s.charAt(i) == '(')
+                leftCount++;
+            else if(leftCount > 0)
+            {
+                dp[i] = dp[i-1]+2;
+                dp[i] += (i-dp[i])>=0 ? dp[i-dp[i]] : 0;
+                ans = Math.max(ans, dp[i]);
+                leftCount--;
+            }
+        }
+        
+        return ans;
+    }
+}
+
+https://leetcode.com/problems/longest-valid-parentheses/discuss/14167/Simple-JAVA-solution-O(n)-time-one-stack
