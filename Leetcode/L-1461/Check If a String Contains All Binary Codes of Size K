@@ -1,0 +1,39 @@
+//Using hashset
+class Solution {
+    public boolean hasAllCodes(String s, int k) {
+        Set<String> hs = new HashSet<>();
+        int l=0, r=k-1;
+        while(r<s.length())
+        {
+            String temp = s.substring(l, r+1);
+            hs.add(temp);
+            l++;
+            r++;
+        }
+        
+        // for(String str : hs)
+        //     System.out.println(str);
+        
+        return (hs.size() == Math.pow(2,k));
+    }
+}
+
+//Using recursion - brute force (tle)
+class Solution {
+    public boolean hasAllCodes(String s, int k) {
+        return solution(s, k, "");
+    }
+    
+    public boolean solution(String s, int k, String ansf)
+    {
+        if(k==0)
+        {
+            if(s.indexOf(ansf) >= 0)
+                return true;
+            else
+                return false;
+        }
+        
+        return solution(s, k, ansf+"0") && solution(s, k, ansf+"1");
+    }
+}
