@@ -1,0 +1,22 @@
+class Solution {
+    public int[][] floodFill(int[][] image, int sr, int sc, int newColor) {
+        if(image[sr][sc] == newColor)
+            return image;
+        
+        solution(image, sr, sc, image[sr][sc], newColor);
+        return image;
+    }
+    
+    private void solution(int [][]matrix, int sr, int sc, int color, int newColor)
+    {
+        if(sr<0 || sc<0 || sr>=matrix.length || sc>=matrix[0].length || matrix[sr][sc] != color)
+            return;
+        matrix[sr][sc] = newColor;
+        solution(matrix, sr+1, sc, color, newColor);
+        solution(matrix, sr-1, sc, color, newColor);
+        solution(matrix, sr, sc+1, color, newColor);
+        solution(matrix, sr, sc-1, color, newColor);
+    }
+}
+
+//BFS & DFS
