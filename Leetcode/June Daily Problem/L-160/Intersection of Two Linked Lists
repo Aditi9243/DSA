@@ -9,6 +9,47 @@
  *     }
  * }
  */
+//By calculating the length of linkedlist
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        if(headA == null || headB == null)
+            return null;
+        int lenA = length(headA), lenB = length(headB);
+        
+        while(lenA > lenB)
+        {
+            headA = headA.next;
+            lenA--;
+        }
+        
+        while(lenA < lenB)
+        {
+            headB = headB.next;
+            lenB--;
+        }
+        
+        while(headA != headB)
+        {
+            headA = headA.next;
+            headB = headB.next;
+        }
+        
+        return headA;
+    }
+    
+    private int length(ListNode node)
+    {
+        int length = 0;
+        while(node != null)
+        {
+            node = node.next;
+            length++;
+        }
+        return length;
+    }
+}
+
+//Another way
 public class Solution {
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
         if(headA == null || headB == null)
@@ -26,3 +67,6 @@ public class Solution {
         return a;
     }
 }
+
+//https://leetcode.com/problems/intersection-of-two-linked-lists/discuss/1093014/C%2B%2B-Four-different-solutions
+//https://leetcode.com/problems/intersection-of-two-linked-lists/discuss/2116221/Visual-Explanation-or-One-Pass-JAVA
