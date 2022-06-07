@@ -1,0 +1,44 @@
+//Using hashmap
+class Solution {
+    public int longestPalindrome(String s) {
+        if(s == null || s.length() == 0)
+            return 0;
+        
+        int count = 0;
+        HashSet<Character> hs = new HashSet<>();
+        for(char c : s.toCharArray())
+        {
+            if(hs.contains(c))
+            {
+                hs.remove(c);
+                count++;
+            }
+            else
+                hs.add(c);
+        }
+        
+        return (hs.isEmpty()) ? count*2 : count*2+1;
+    }
+}
+
+//Another way
+class Solution {
+    public int longestPalindrome(String s) {
+        if(s == null || s.length() == 0)
+            return 0;
+        
+        HashSet<Character> hs = new HashSet<>();
+        for(char c : s.toCharArray())
+        {
+            if(hs.contains(c))
+            {
+                hs.remove(c);
+            }
+            else
+                hs.add(c);
+        }
+        
+        return (hs.size() == 0) ? s.length() : s.length() - hs.size() + 1;
+    }
+}
+
