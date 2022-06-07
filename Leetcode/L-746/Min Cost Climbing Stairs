@@ -1,0 +1,104 @@
+//Recursion - tle
+class Solution {
+    private int minCost = Integer.MAX_VALUE;
+    
+    public int minCostClimbingStairs(int[] cost) {
+        solution(cost, 0, 0);   //start 0
+        solution(cost, 1, 0);   //start 1
+        return minCost;
+    }
+    
+    public void solution(int []arr, int idx, int cost)
+    {
+        if(idx == arr.length)
+        {
+            if(cost < minCost)
+                minCost = cost;
+            return;
+        }
+        
+        for(int jump = 1; jump <= 2 && idx+jump <= arr.length; jump++)
+        {
+            cost += arr[idx];
+            solution(arr, idx+jump, cost);
+            cost -= arr[idx];
+        }
+    }
+}
+
+//Memoization - tle
+class Solution {
+    
+    public int minCostClimbingStairs(int[] cost) {
+        if(cost.length == 1)
+            return cost[0];
+        
+        int dp[] = new int[cost.length];
+        dp[0] = cost[0];
+        dp[1] = cost[1];
+        solution(cost, 2, dp);  
+        return Math.min(dp[cost.length-1], dp[cost.length-2]);
+    }
+    
+    public void solution(int []arr, int idx, int []dp)
+    {
+        if(idx >= arr.length)
+        {
+            return;
+        }
+        
+        for(int jump = 1; jump <= 2 && idx+jump <= arr.length; jump++)
+        {
+            
+            dp[idx] = arr[idx] + Math.min(dp[idx-1], dp[idx-2]);
+            solution(arr, idx+jump, dp);
+        }
+    }
+}
+
+//DP
+class Solution {
+    
+    public int minCostClimbingStairs(int[] cost) {        
+        int dp[] = new int[cost.length];
+        dp[0] = cost[0];
+        dp[1] = cost[1];
+        for(int i=2; i<cost.length; i++)
+            dp[i] = cost[i] + Math.min(dp[i-1], dp[i-2]);
+
+        return Math.min(dp[cost.length-1], dp[cost.length-2]);
+    }
+}
+
+//Constant space
+class Solution {
+    public int minCostClimbingStairs(int[] cost) {        
+        int n = cost.length;
+        int first = cost[0];
+        int second = cost[1];
+        for(int i=2; i<cost.length; i++)
+        {
+            int r = cost[i] + Math.min(first, second);
+            first = second;
+            second = r;
+        }
+            
+        return Math.min(first, second);
+    }
+}
+
+//without dp array
+class Solution {
+    public int minCostClimbingStairs(int[] cost) {        
+        int n = cost.length;
+        for(int i=2; i<n; i++)
+        {
+            cost[i] += Math.min(cost[i-2], cost[i-1]);
+        }
+            
+        return Math.min(cost[n-2], cost[n-1]);
+    }
+}
+
+//https://leetcode.com/problems/min-cost-climbing-stairs/discuss/476388/4-ways-or-Step-by-step-from-Recursion-greater-top-down-DP-greater-bottom-up-DP-greater-fine-tuning
+//https://leetcode.com/problems/min-cost-climbing-stairs/discuss/405912/Java-Solutions-Recurrence-DP-Bottom-up-(easy-understand-with-comments)
