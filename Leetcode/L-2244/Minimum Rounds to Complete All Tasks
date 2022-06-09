@@ -1,0 +1,65 @@
+//Using Hashmap
+class Solution {
+    int count = 0;
+    public int minimumRounds(int[] tasks) {
+        HashMap<Integer, Integer> hm = new HashMap<>();
+        for(int i : tasks)
+        {
+            hm.put(i, 1+hm.getOrDefault(i,0));
+        }
+        
+        int round = 0;
+        for(int val : hm.values())
+        {
+            if(val == 1)
+                return -1;
+            
+            round += (val%3 == 0)? val/3 : 1+ val/3;
+        }
+        return round;
+    }
+}
+
+class Solution {
+    int count = 0;
+    public int minimumRounds(int[] tasks) {
+        HashMap<Integer, Integer> hm = new HashMap<>();
+        for(int i : tasks)
+        {
+            hm.put(i, 1+hm.getOrDefault(i,0));
+        }
+        
+        int round = 0;
+        for(int val : hm.values())
+        {
+            if(val == 1)
+                return -1;
+            
+            round += (val+2)/3;
+        }
+        return round;
+    }
+}
+
+class Solution {
+    int count = 0;
+    public int minimumRounds(int[] tasks) {
+        HashMap<Integer, Integer> hm = new HashMap<>();
+        for(int i : tasks)
+        {
+            hm.put(i, 1+hm.getOrDefault(i,0));
+        }
+        
+        int round = 0;
+        for(int val : hm.values())
+        {
+            if(val == 1)
+                return -1;
+            
+            round += val / 3;
+            if(val%3 != 0)
+                round++;
+        }
+        return round;
+    }
+}

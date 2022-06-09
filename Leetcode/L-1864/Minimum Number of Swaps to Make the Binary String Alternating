@@ -1,0 +1,101 @@
+class Solution {
+    public int minSwaps(String s) {
+        int countZero = 0, countOne = 0;
+        for(char ch : s.toCharArray())
+        {
+            if(ch == '0')
+                countZero++;
+            else
+                countOne++;
+        }
+        
+        if(Math.abs(countOne - countZero) > 1)
+            return -1;
+        if(countZero > countOne)
+            return countSwaps(s, '0');
+        if(countZero < countOne)
+            return countSwaps(s, '1');
+        
+        return Math.min(countSwaps(s, '0'), countSwaps(s, '1')); 
+    }
+    
+    private int countSwaps(String str, char start)
+    {
+        int countWrongPos = 0;
+        for(char ch : str.toCharArray())
+        {
+            if(ch != start)
+                countWrongPos++;
+            start = (char)('1' - start + '0');
+            
+        }
+        
+        return countWrongPos/2;
+    }
+}
+
+//Better solution
+class Solution {
+    public int minSwaps(String s) {
+        int swap1 = canAlter('1', s);
+        int swap2 = canAlter('0', s);
+        int ans = Math.min(swap1, swap2);
+        return (ans == s.length())? -1: ans;
+    }
+    
+    public int canAlter(char ch, String s)
+    {
+        int missOne = 0, missZero = 0;
+        for(int i = 0; i < s.length(); i++)
+        {
+            char c = s.charAt(i);
+            if(c != ch)
+            {
+                if(c == '1')
+                    missOne++;
+                else
+                    missZero++;
+            }
+            
+            ch = (ch == '0')? '1': '0';
+        }
+        
+        return (missOne == missZero)? missOne : s.length();
+    }
+}
+
+//Bit manupulation
+class Solution {
+    public int minSwaps(String s) {
+        int countZero = 0, countOne = 0;
+        for(char ch : s.toCharArray())
+        {
+            if(ch == '0')
+                countZero++;
+            else
+                countOne++;
+        }
+        
+        if(Math.abs(countOne - countZero) > 1)
+            return -1;
+        if(countZero > countOne)
+            return countSwaps(s, '0');
+        if(countZero < countOne)
+            return countSwaps(s, '1');
+        
+        return Math.min(countSwaps(s, '0'), countSwaps(s, '1')); 
+    }
+    
+    private int countSwaps(String str, char ch)
+    {
+        int n = ch-'0';
+        int swap = 0;
+        for(int i=0; i<str.length(); i++)
+        {
+            if(str.charAt(i)-'0' != n)
+                swap++;
+            n = n^1;
+        }
+        return swap/2;
+    }
+}

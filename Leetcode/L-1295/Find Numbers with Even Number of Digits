@@ -1,0 +1,35 @@
+class Solution {
+    public int findNumbers(int[] nums) {
+        int ans = 0;
+        for(int num : nums)
+        {
+            if(countDigit(num) % 2 == 0)
+                ans++;
+        }
+        return ans;
+    }
+    
+    private int countDigit(int num)
+    {
+        int d = 0;
+        while(num > 0)
+        {
+            d++;
+            num /= 10;
+        }
+        return d;
+    }
+}
+
+//Without function call
+class Solution {
+    public int findNumbers(int[] nums) {
+        int ans = 0;
+        for(int num : nums)
+        {
+            if((num>9 && num<100) || (num>999 && num<10000) || num==100000)
+                ans++;
+        }
+        return ans;
+    }
+}
