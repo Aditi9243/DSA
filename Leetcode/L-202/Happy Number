@@ -1,0 +1,49 @@
+class Solution {
+    public boolean isHappy(int n) {
+        if(n == 1 || n==7)
+            return true;
+        if(n <= 9)
+        {
+            return false;
+        }
+        
+        int d;
+        int sum = 0;
+        while(n>0)
+        {
+            d = n%10;
+            sum += Math.pow(d, 2);
+            n /= 10;
+        }
+        
+        return isHappy(sum);
+    }
+}
+
+//Using hashset
+class Solution {
+    public boolean isHappy(int n) {
+        Set<Integer> hs = new HashSet<>();
+        
+        while(n != 1)
+        {
+            int temp = n;
+            int sum = 0;
+            
+            while(temp > 0)
+            {
+                int d = temp%10;
+                sum += d*d;
+                temp /= 10;
+            }
+            
+            n=sum;
+            if(hs.contains(n))
+                return false;
+            else
+                hs.add(n);
+        }
+        
+        return true;
+    }
+}
