@@ -1,0 +1,76 @@
+//2 pointer - sliding window 
+class Solution {
+    public int minOperations(int[] nums, int x) {
+        int sum = 0;
+        for(int num : nums)
+            sum += num; //sum of complete array
+        
+        int len = -1, currSum = 0;  //len - maxlength of subarray whose sum is equal to sum-x
+        for(int l=0, r=0; r<nums.length; r++)
+        {
+            currSum += nums[r];
+            while(l <= r && currSum > sum-x)
+                currSum -= nums[l++];
+            if(currSum == sum - x)
+                len = Math.max(len, r-l+1);
+        }
+        
+        return (len == -1)? -1: nums.length-len;
+    }
+}
+
+//Two sum variation - best solution
+class Solution {
+    public int minOperations(int[] nums, int x) {
+        int sum = 0;
+        for(int num : nums)
+            sum += num; //sum of complete array
+        
+        int l = 0, r = 0, ans = Integer.MAX_VALUE, size = nums.length;
+        while(l <= r)
+        {
+            if(sum >= x)
+            {
+                if(sum == x)
+                    ans = Math.min(ans, l+size-r);
+                
+                if(r < size)
+                    sum -= nums[r++];
+                else
+                    break;
+            }
+            else
+                sum += nums[l++];
+        }
+        
+        return (ans == Integer.MAX_VALUE)? -1: ans;
+    }
+}
+
+//Hashmap
+class Solution {
+    public int minOperations(int[] nums, int x) {
+        int target = -x;
+        for(int num : nums)
+            target += num; //sum of complete array minus x
+        
+        if(target == 0)
+            return nums.length;
+        
+        HashMap<Integer, Integer> hm = new HashMap<>();
+        hm.put(0, -1);
+        int sum = 0;
+        int ans = Integer.MIN_VALUE;
+        
+        for(int i=0; i<nums.length; i++)
+        {
+            sum += nums[i];
+            if(hm.containsKey(sum - target))
+                ans = Math.max(ans, i-hm.get(sum - target));
+            
+            hm.put(sum, i);
+        }
+              
+        return (ans == Integer.MIN_VALUE)? -1: nums.length-ans;
+    }
+}
