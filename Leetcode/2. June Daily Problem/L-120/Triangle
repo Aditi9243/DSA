@@ -1,0 +1,44 @@
+//Recursion code -- try******
+class Solution {
+    int minCost = Integer.MAX_VALUE;
+    
+    public int minimumTotal(List<List<Integer>> triangle) {
+        if(triangle == null || triangle.size() == 0)
+            return 0;
+        solution(triangle, 0, 0, 0);
+        return minCost;        
+    }
+    
+    private void solution(List<List<Integer>> triangle, int idx, int row, int cost)
+    {
+        if(row == triangle)
+    }
+}
+
+//DP - bottom up approach
+class Solution {
+    
+    public int minimumTotal(List<List<Integer>> triangle) {
+        if(triangle == null || triangle.size() == 0)
+            return 0;
+        int row = triangle.size();  //no. of rows
+        int n = triangle.get(row-1).size(); //last row length
+        
+        int []dp = new int[n];
+        for(int i=0; i<n; i++)
+        {
+            dp[i] = triangle.get(row-1).get(i); //filling dp with last row values
+        }
+        
+        for(int i = n-2; i>=0; i--)
+        {
+            List<Integer> temp = triangle.get(i);
+            for(int j=0; j<temp.size(); j++)
+            {
+                dp[j] = Math.min(dp[j], dp[j+1]) + temp.get(j);
+            }
+        }
+        
+        return dp[0];
+    }
+}
