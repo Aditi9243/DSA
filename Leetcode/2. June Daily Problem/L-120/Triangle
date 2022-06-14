@@ -1,17 +1,30 @@
-//Recursion code -- try******
+//Recursion code - may give tle error
 class Solution {
     int minCost = Integer.MAX_VALUE;
     
     public int minimumTotal(List<List<Integer>> triangle) {
         if(triangle == null || triangle.size() == 0)
             return 0;
-        solution(triangle, 0, 0, 0);
+        solution(triangle, 0, 0);
         return minCost;        
     }
     
-    private void solution(List<List<Integer>> triangle, int idx, int row, int cost)
+    private void solution(List<List<Integer>> triangle, int row, int cost)
     {
-        if(row == triangle)
+        if(row == triangle.size())
+        {
+            if(minCost > cost)
+                minCost = cost;
+            return;
+        }
+        
+        int n = triangle.get(row).size();
+        for(int i=0; i<n; i++)
+        {
+            cost += triangle.get(row).get(i);
+            solution(triangle, row+1, cost);
+            cost -= triangle.get(row).get(i);
+        }
     }
 }
 
@@ -42,3 +55,46 @@ class Solution {
         return dp[0];
     }
 }
+
+//DP - top to bottom
+class Solution {
+    
+    public int minimumTotal(List<List<Integer>> triangle) {
+        if(triangle == null || triangle.size() == 0)
+            return 0;
+        int row = triangle.size();  //no. of rows
+        int n = triangle.get(row-1).size(); //last row length
+        
+        int []dp = new int[n];
+        dp[0] = triangle.get(0).get(0);
+        for(int i=1; i<row; i++)
+        {
+            List<Integer> curr = triangle.get(i);
+            for(int j=curr.size()-1; j>=0; j--)
+            {
+                if(j == 0)
+                    dp[0] += curr.get(j);
+                
+                else if(j == curr.size()-1)
+                    dp[j] = dp[j-1] + curr.get(j);
+                
+                else
+                    dp[j] = Math.min(dp[j], dp[j-1]) + curr.get(j);
+            }
+        }
+        
+        int min = Integer.MAX_VALUE;
+        for(int i = 0; i<n; i++)
+        {
+            min = Math.min(min, dp[i]);
+        }
+        
+        return min;
+    }
+}
+
+//Try in 2d dp array -> both bottom-up and top-down approaches
+//Memoization
+https://leetcode.com/problems/triangle/discuss/773863/SImple-step-by-step-Recursive-greater-Memoization-greater-DP-three-solutions-oror-easy-to-understand
+https://leetcode.com/problems/triangle/discuss/2144980/From-Memoization-to-DP-or-JAVA-Explanation
+https://leetcode.com/problems/triangle/discuss/494736/Java-99.40-time-8.16-space
