@@ -1,0 +1,36 @@
+//Brute force
+//https://leetcode.com/problems/longest-palindromic-substring/discuss/844586/Very-Easy-To-understand-oror-Well-commented-oror-2-Approaches-oror-Thinking-Process
+
+//Another method
+class Solution {
+    private int low, max;
+    
+    public String longestPalindrome(String s) {
+        if(s.length() < 2)
+            return s;
+        
+        for(int i=0; i<s.length()-1; i++)
+        {
+            extendedPalindrome(s, i, i);
+            extendedPalindrome(s, i, i+1);
+        }
+        
+        return s.substring(low, low+max);
+    }
+    
+    private void extendedPalindrome(String s, int start, int end)
+    {
+        while(start >= 0 && end < s.length() && s.charAt(start) == s.charAt(end))
+        {
+            start--;
+            end++;
+        }
+        
+        if(max < end-start-1)
+        {
+            low = start+1;
+            max = end-start-1;
+        }
+    }
+}
+
