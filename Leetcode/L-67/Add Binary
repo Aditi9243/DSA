@@ -1,0 +1,26 @@
+class Solution {
+    public String addBinary(String a, String b) {
+        int c = 0;
+        int i=a.length()-1;
+        int j=b.length()-1;
+        
+        String sum = "";
+        while(i >= 0 || j >= 0)
+        {
+            int s = c;
+            if(i >= 0) 
+                s += a.charAt(i--) - '0';
+            
+            if(j >= 0) 
+                s += b.charAt(j--) - '0';
+            c = s/2;
+            sum = (s%2)+sum;
+        }
+        
+        if(c != 0)
+            sum = c+sum;
+        
+        // return Integer.toString(sum);
+        return sum;
+    }
+}
