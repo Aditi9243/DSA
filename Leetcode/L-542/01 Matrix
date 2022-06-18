@@ -1,0 +1,88 @@
+//DP
+class Solution {
+    public int[][] updateMatrix(int[][] mat) {
+        int m = mat.length;
+        int n = mat[0].length;
+        int dist = m+n;
+        
+        for(int r=0; r<m; r++)
+        {
+            for(int c=0; c<n; c++)
+            {
+                if(mat[r][c] == 0)
+                    continue;
+                
+                int top = dist, left = dist;
+                if(r-1 >= 0)
+                    top = mat[r-1][c];
+                if(c-1 >= 0)
+                    left = mat[r][c-1];
+                
+                mat[r][c] = Math.min(top, left) + 1;
+            }
+        }
+        
+        for(int r=m-1; r>=0; r--)
+        {
+            for(int c=n-1; c>=0; c--)
+            {
+                if(mat[r][c] == 0)
+                    continue;
+                
+                int bottom = dist, right = dist;
+                if(r+1 < m)
+                    bottom = mat[r+1][c];
+                if(c+1 < n)
+                    right = mat[r][c+1];
+                
+                mat[r][c] = Math.min(mat[r][c], Math.min(bottom, right)+1);
+            }
+        }
+        
+        return mat;
+    }
+}
+
+//BFS
+class Solution {
+    int []dir = {0,1,0,-1,0};
+    
+    public int[][] updateMatrix(int[][] mat) {
+        int m = mat.length;
+        int n = mat[0].length;
+        Queue<int[]> qu = new LinkedList<>();
+        
+        for(int r=0; r<m; r++)
+        {
+            for(int c=0; c<n; c++)
+            {
+                if(mat[r][c] == 0)
+                    qu.add(new int[]{r, c});
+                
+                else
+                    mat[r][c] = -1; //marked as not processed
+            }
+        }
+        
+        while(!qu.isEmpty())
+        {
+            int []curr = qu.remove();
+            int row = curr[0], col = curr[1];
+            
+            for(int i=0; i<4; i++)
+            {
+                int nr = row+dir[i];
+                int nc = col+dir[i+1];
+                
+                if(nr < 0 || nr == m || nc < 0 || nc == n || mat[nr][nc] != -1)
+                    continue;
+                
+                mat[nr][nc] = mat[row][col] + 1;
+                qu.add(new int[]{nr, nc});
+            }
+            
+        }
+        
+        return mat;
+    }
+}
