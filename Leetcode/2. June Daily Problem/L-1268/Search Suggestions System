@@ -1,0 +1,25 @@
+class Solution {
+    public List<List<String>> suggestedProducts(String[] products, String searchWord) {
+        Arrays.sort(products);
+        List<List<String>> ans = new ArrayList<>();
+        for(int i = 0; i<searchWord.length(); i++)
+        {
+            String prefix = searchWord.substring(0, i+1);
+            int insert = Arrays.binarySearch(products, prefix);
+            if(insert < 0)
+                insert = -insert-1;
+            
+            List<String> suggestions = new ArrayList<>();
+            int j=insert;
+            while(suggestions.size()<3 && j < products.length && products[j].startsWith(prefix))
+            {
+                suggestions.add(products[j]);
+                j++;
+            }
+            
+            ans.add(suggestions);
+        }
+        
+        return ans;
+    }
+}
