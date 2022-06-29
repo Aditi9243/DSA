@@ -1,0 +1,80 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+
+ //Recursive
+class Solution {
+    public int minDepth(TreeNode root) {
+        if(root == null)
+            return 0;
+        
+        int left = minDepth(root.left);
+        int right = minDepth(root.right);
+        
+        return 1 + ((Math.min(left,right) > 0)?Math.min(left,right) : Math.max(left,right));
+    }
+}
+
+class Solution {
+    public int minDepth(TreeNode root) {
+        if(root == null)
+            return 0;
+        
+        int left = minDepth(root.left);
+        int right = minDepth(root.right);
+        
+        if(left == 0)   //left don't exist
+            return 1+right;
+        else if(right == 0) //right don't exist
+            return 1+left;
+        else    //when bot exist
+            return 1+Math.min(left, right);
+        
+        // return 1 + ((Math.min(left,right) > 0)?Math.min(left,right) : Math.max(left,right));
+    }
+}
+
+//Iterative - bfs
+class Solution {
+    public int minDepth(TreeNode root) {
+        if(root == null)
+            return 0;
+        
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
+        int depth = 0;
+        
+        while(!q.isEmpty())
+        {
+            depth++;
+            int size = q.size();
+            
+            for(int i=0; i<size; i++)
+            {
+                TreeNode temp = q.remove();
+                
+                if(temp.left == null && temp.right == null)
+                    return depth;
+                
+                if(temp.left != null)
+                    q.add(temp.left);
+                
+                if(temp.right != null)
+                    q.add(temp.right);
+            }
+        }
+        return -1;        
+    }
+}
