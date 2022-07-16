@@ -1,0 +1,40 @@
+//Backtracking
+
+class Solution {
+    public boolean makesquare(int[] matchsticks) {
+        int total = 0;
+        for(int x : matchsticks)
+            total += x;
+        
+        if(total%4 != 0)
+            return false;
+        
+        Arrays.sort(matchsticks);
+        return helper(matchsticks, matchsticks.length-1, 0, 0, 0, 0, total/4);
+    }
+    
+    private boolean helper(int arr[], int idx, int top, int bottom, int left, int right, int target)
+    {
+        if(top == target && bottom == target && left == target && right == target)
+            return true;
+        
+        if(top > target || bottom  > target || left > target || right > target)
+            return false;
+        
+        // int val = arr[idx];
+        
+        boolean t = helper(arr, idx-1, top+arr[idx], bottom, left, right, target);
+        if(t) return true;
+        
+        boolean b = helper(arr, idx-1, top, bottom+arr[idx], left, right, target);
+        if(b) return true;
+        
+        boolean l = helper(arr, idx-1, top, bottom, left+arr[idx], right, target);
+        if(l) return true;
+        
+        boolean r = helper(arr, idx-1, top, bottom, left, right+arr[idx], target);
+        if(r) return true;
+        
+        return false;
+    }
+}
