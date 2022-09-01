@@ -1,0 +1,136 @@
+//Best Solution
+class Solution {
+    public void setZeroes(int[][] matrix) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+        int []r = new int[m];
+        int []c = new int[n];
+        
+        for(int i=0; i<m; i++) //row
+        {
+            for(int j=0; j<n; j++) //col
+            {
+                if(matrix[i][j] == 0)
+                {
+                    r[i] = 1;
+                    c[j] = 1;
+                }
+            }
+        }
+        
+        for(int i=0; i<m; i++)
+        {
+            for(int j=0; j<n; j++)
+            {
+                if(r[i]==1 || c[j]==1)
+                    matrix[i][j] = 0;
+            }
+        }
+    }
+}
+
+//Prev Version
+class Solution {
+    public void setZeroes(int[][] matrix) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+        int []r = new int[m];
+        int []c = new int[n];
+        
+        for(int i=0; i<m; i++) //row
+        {
+            for(int j=0; j<n; j++) //col
+            {
+                if(matrix[i][j] == 0)
+                {
+                    r[i] = 1;
+                    c[j] = 1;
+                }
+            }
+        }
+        
+        for(int k=0; k<m; k++)
+        {
+            if(r[k] == 1)
+            {
+                for(int i=0; i<n; i++)  //col
+                {
+                    matrix[k][i] = 0;
+                }
+            }
+        }
+        
+        for(int k=0; k<n; k++)
+        {
+            if(c[k] == 1)
+            {
+                for(int j=0; j<m; j++)  //row
+                {
+                    matrix[j][k] = 0;
+                }
+            }
+        }
+    }
+}
+
+//Brute force
+class Solution {
+    public void setZeroes(int[][] matrix) {
+        int []row = new int[matrix.length];
+        int []col = new int[matrix[0].length];
+        Arrays.fill(row,-1);
+        Arrays.fill(col,-1);
+        
+        for(int i=0; i<matrix.length; i++)
+        {
+            for(int j=0; j<matrix[0].length; j++)
+            {
+                if(matrix[i][j] == 0)
+                {
+                    row[i] = i;
+                    col[j] = j;
+                }   
+            }
+        }
+        
+        for(int i=0; i<matrix.length; i++)
+        {
+            for(int j=0; j<matrix[0].length; j++)
+            {
+                if(row[i] != -1 || col[j] != -1)
+                    matrix[i][j] = 0;
+            }
+        }
+    }
+}
+
+//Using Hashmap
+class Solution {
+    public void setZeroes(int[][] matrix) {
+        int r = matrix.length;
+        int c = matrix[0].length;
+        Set<Integer> row = new HashSet<>();
+        Set<Integer> col = new HashSet<>();
+        
+        for(int i=0; i<r; i++)
+        {
+            for(int j=0; j<c; j++)
+            {
+                if(matrix[i][j] == 0)
+                {
+                    row.add(i);
+                    col.add(j);
+                }   
+            }
+        }
+        
+        for(int i=0; i<r; i++)
+        {
+            for(int j=0; j<c; j++)
+            {
+                if(row.contains(i) || col.contains(j))
+                    matrix[i][j] = 0;
+            }
+        }
+    }
+}
