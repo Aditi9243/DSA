@@ -1,0 +1,88 @@
+//Only given the level order of the tree
+
+public class BTree
+{
+    class Node
+    {
+        int data;
+        Node left;
+        Node right;
+        public Node(int i) {
+            data = i;
+        }
+    }
+    Node root;
+
+    BTree(int []arr)
+    {
+        // createLvl(arr);
+        root = crt(arr);
+    }
+
+    private void createLvl(int []lvl) {
+        root = new Node(lvl[0]);
+        Queue<Node> q = new LinkedList<>();
+        q.add(root);
+        int idx = 1;
+        while(!q.isEmpty())
+        {
+            Node curr = q.poll();
+            if(idx < lvl.length && lvl[idx] != -1)
+            {
+                curr.left = new Node(lvl[idx]);
+                q.add(curr.left);
+            }
+            idx++;
+            if(idx < lvl.length && lvl[idx] != -1)
+            {
+                curr.right = new Node(lvl[idx]);
+                q.add(curr.right);
+            }
+            idx++;
+        }
+    }
+
+    private void display(Node nn)
+    {
+        if(nn == null)
+        {
+            return;
+        }
+
+        String str = "";
+        if(nn.left != null)
+        {
+            str = nn.left.data + "";
+        }
+
+        str += "=>" + nn.data + "<=";
+        if(nn.right != null)
+        {
+            str = nn.right.data + "";
+        }
+
+        System.out.println(str);
+        display(nn.left);
+        display(nn.right);
+    }
+
+    int ip = 0;
+    public void createPre(int []pre)    //create tree using preorder only
+    {
+        ip = 0; //index
+        root = crt(pre);
+    }
+
+    public Node crt(int []pre) {
+        if(ip >= pre.length || pre[ip] == -1)
+        {
+            ip++;
+            return null;
+        }
+        Node nn = new Node(pre[ip]);
+        ip++;
+        nn.left = crt(pre);
+        nn.right = crt(pre);
+        return nn;
+    }
+}
