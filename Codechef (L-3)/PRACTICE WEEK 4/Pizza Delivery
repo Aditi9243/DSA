@@ -1,0 +1,59 @@
+Problem Code:
+DBOY
+
+
+
+*************************************************************
+/* package codechef; // don't place package name! */
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+/* Name of the class has to be "Main" only if the class is public. */
+class Codechef
+{
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		// your code goes here
+		Scanner in=new Scanner(System.in);
+		int testcases=in.nextInt();
+		while(testcases!=0)
+		{
+			int no_of_deliveries=in.nextInt();
+			int[] distance=new int[no_of_deliveries];
+			int[]fuel_amount=new int[no_of_deliveries];
+			int max_dist=0;
+			for(int i=0;i<no_of_deliveries;i++)
+			{
+			    distance[i]=in.nextInt();
+			    max_dist=Math.max(max_dist,distance[i]);
+			}
+			for(int i=0;i<no_of_deliveries;i++)
+			{
+			    fuel_amount[i]=in.nextInt();
+			}
+			int[]dp=new int[2*max_dist+1];
+			Arrays.fill(dp,100000000);
+			
+			dp[0]=0;
+			for(int km=1;km<=2*max_dist;km++)
+			{
+			    for(int litres:fuel_amount)
+			    {
+			        if(km>=litres)
+			        {
+			            dp[km]=Math.min(dp[km],1+dp[km-litres]);
+			        }
+			    }
+			}
+			long s=0;
+			for(int x:distance){
+			    s+=dp[2*x];
+			}
+			System.out.println(s);
+			testcases--;
+		}
+	}
+}
+

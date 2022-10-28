@@ -1,0 +1,66 @@
+Problem Code:
+E1
+
+/* package codechef; // don't place package name! */
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+/* Name of the class has to be "Main" only if the class is public. */
+class Codechef
+{   
+    private static int[][] memo;
+    public static int dfs(char[][] grid,int r,int c){
+        if(r<0 || c<0 || r>=grid.length || c>=grid[0].length)
+            return 0;
+        int res = 0;
+        if(grid[r][c]=='P'){
+            res += 1;
+            grid[r][c] = '.';
+        }
+        if(memo[r][c]>0){
+            return memo[r][c];
+        }
+        res += Math.max(dfs(grid,r-2,c+1),Math.max(dfs(grid,r-1,c+2),Math.max(dfs(grid,r+2,c+1),dfs(grid,r+1,c+2))));
+       
+        memo[r][c] = res;
+        return res;
+    }
+    /*public static int bdfs(char[][] grid,int r,int c){
+        int[][] dp = new int[grid.length][grid[0].length];
+        
+        for(int row=r;row<grid.length;row++){
+            for(int col=c;col<grid[row].length;col++){
+                if(grid[])
+            }
+        }
+    }*/
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int T = Integer.parseInt(br.readLine());
+		while(T-->0){
+		    int N = Integer.parseInt(br.readLine());
+		    char[][] grid = new char[N][];
+		    int r = -1;
+		    int c = -1;
+		    for(int i=0;i<N;i++){
+		        String s = br.readLine();
+		        char[] t = s.toCharArray();
+		        if(r==-1&&c==-1){
+		            for(int j=0;j<t.length;j++){
+		                if(t[j]=='K'){
+		                    r = i;
+		                    c = j;
+		                    break;
+		                }
+		            }
+		        }
+		        grid[i] = t;
+		    }
+		    memo = new int[N][N];
+		    System.out.println(dfs(grid,r,c));
+		}
+	}
+}

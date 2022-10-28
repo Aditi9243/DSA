@@ -1,0 +1,56 @@
+Problem Code:
+FROGV
+
+/* package codechef; // don't place package name! */
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+/* Name of the class has to be "Main" only if the class is public. */
+class Codechef
+{
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		// your code goes here
+		Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        int k=sc.nextInt();
+        int p=sc.nextInt();
+        
+        long[] dp=new long[n];
+        Pair[] coordinates=new Pair[n];
+        
+        for (int i = 0; i < n; i++) coordinates[i]=new Pair(sc.nextInt(),i+1);
+        Arrays.sort(coordinates);
+        HashMap<Integer,Integer> bg=new HashMap<>();
+        for (int i = 0; i < n; i++) bg.put(coordinates[i].y,i);
+        for (int i = 1; i < n; i++) {
+            if(coordinates[i].x-coordinates[i-1].x<=k){
+                dp[i]=1+dp[i-1];
+            }
+        }
+       
+        while(p-->0){
+            int A=bg.get(sc.nextInt());
+            int B=bg.get(sc.nextInt());
+            if(Math.abs(A-B)<=dp[Math.max(A,B)]) System.out.println("Yes");
+            else System.out.println("No");
+        }
+	}
+}
+
+
+class Pair implements Comparable<Pair>{
+	int x;
+	int y;
+
+	Pair(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
+	public int compareTo(Pair o) {
+        return (int) (this.x - o.x);
+
+    }
+}

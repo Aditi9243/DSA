@@ -1,0 +1,64 @@
+Problem Code:
+COUNTPAL
+
+**************************************************
+
+/* package codechef; // don't place package name! */
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+/* Name of the class has to be "Main" only if the class is public. */
+class Codechef
+{
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		// your code goes here
+		int t = 1;
+		while(t-->0){
+		    solve();    
+		}
+	}
+	static int limit = (int)1e9+7;
+	private static void solve() throws Exception{
+	   // StringTokenizer str =  new StringTokenizer(br.readLine());
+	   // int n = Integer.parseInt(str.nextToken());
+	   String s = br.readLine();
+	   System.out.println(CountPal(s));
+	   
+	}
+	public static int CountPal(String s){
+        boolean [][] lps = LPS(s);
+        int [] dp = new int[s.length()];
+        Arrays.fill(dp,0);
+        dp[0] = 1;
+
+        for(int i = 1 ; i < s.length() ; ++i){
+            for(int j = i ; j >= 0 ; --j){
+                if(lps[j][i]){
+                    dp[i] = (dp[i] + ((j-1) < 0 ? 1:dp[j-1]))%MOD;
+                }
+            }
+        }
+        return dp[s.length()-1];
+    }
+     public static final int MOD = (int)Math.pow(10,9)+7;
+    public static boolean[][] LPS(String s){
+        //Longest Palindromic substring [i..j]
+        int n = s.length();
+        boolean dp[][] = new boolean[s.length()][s.length()];
+        for(int i = 0 ; i < s.length() ; ++i){
+            Arrays.fill(dp[i],true);
+        }
+        int sIndex = 0,eIndex = 0;
+        for(int len = 2; len <= n ; ++len){
+            for(int start = 0 ; start <= n-len; ++start){
+                int end = start + len - 1;
+                dp[start][end] = (s.charAt(start) == s.charAt(end) && dp[start+1][end-1]);
+            }
+        }
+        return dp;
+    }
+}
