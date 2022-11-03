@@ -1,0 +1,111 @@
+Problem Code: POGOSTCK
+
+Problem
+Chef is participating in a pogo stick race. In this competition, there are NN squares (numbered 11 through NN) in a row. Chef must choose a starting square, enter this square and start jumping on his pogo stick. In each jump, if Chef is at a square ss, then he can only jump to the square s+Ks+K. If square s+Ks+K does not exist, Chef jumps out of the row of squares and the race ends for him. It is not allowed to stop jumping any earlier.
+
+Each square has a value; let's denote the value of the i-th square by A_i. Initially, Chef has 00 points. When he jumps in some square (including the initial square), he is awarded a number of points equal to the value of this square, exactly once. Note that if this value is negative, the number of Chef's points is decreased.
+
+Determine the maximum possible total number of points Chef can get if he selects the initial cell optimally.
+
+Input
+The first line of the input contains a single integer T denoting the number of test cases. The description of T test cases follows.
+The first line of each test case contains two space-separated integers NN and KK.
+The second line contains NN space-separated integers A_1, A_2, \ldots, A_N
+
+Output
+For each test case, print a single line containing one integer ― the maximum number of points.
+
+Constraints
+1≤T≤1,000
+1≤N≤10^5 
+1≤K≤10^5
+ 
+|A_i| ≤ 10,000 for each valid i
+the sum of NN over all test cases does not exceed 10^6
+ 
+Subtasks
+Subtask #1 (30 points): N ≤ 1,000
+the sum of NN over all test cases does not exceed 10,00010,000
+Subtask #2 (70 points): original constraints
+
+Sample 1:
+Input
+2
+5 2
+3 6 4 7 2
+5 3
+3 -5 6 3 10
+
+Output
+13
+10
+
+*******************************************************************
+/* package codechef; // don't place package name! */
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+/* Name of the class has to be "Main" only if the class is public. */
+class Codechef
+{
+    // static int ans = 0;
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		// your code goes here
+		Scanner scn = new Scanner(System.in);
+		int t = scn.nextInt();
+		while(t-- > 0)
+		{
+		    int n = scn.nextInt();
+		    int k = scn.nextInt();
+		    
+		    int []arr = new int[n];
+		    for(int i=0; i<n; i++)
+		    {
+		        arr[i] = scn.nextInt();
+		    }
+		    
+		  //  solve(arr, 0, k, 0);
+		  //  System.out.println(ans);
+		  
+		  for(int i=0; i<n; i++)
+		    {
+		        if((i - k)<0)
+		            continue;
+		            
+		        int m = arr[i] + arr[i-k];
+		        if(m >= arr[i])
+		            arr[i] = m;
+		    }
+		    
+		    int ans = Integer.MIN_VALUE;
+		    for(int i=n-k; i<n; i++)
+		    {
+		        if(i<0)
+		            continue;
+		            
+		        ans = Math.max(ans, arr[i]);   
+		    }
+		    System.out.println(ans);
+		}
+	}
+	
+// 	public static void solve(int []arr, int start, int k, int sum)
+// 	{
+// 	    if(start >= arr.length)
+// 	    {
+// 	        if(sum > ans)
+// 	        {
+// 	            ans = sum;
+// 	        }
+// 	        return;
+// 	    }
+	    
+// 	    for(int i=start; i<arr.length; i++)
+// 	    {
+// 	        solve(arr, i+k, k, sum+arr[i]);
+// 	    }
+// 	}
+}
