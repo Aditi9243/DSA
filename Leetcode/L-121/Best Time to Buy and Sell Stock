@@ -1,3 +1,70 @@
+//TLE 
+class Solution {
+    public int maxProfit(int[] prices) {
+        int profit = 0;
+        for(int i=0; i<prices.length; i++)
+        {
+            int buy = prices[i];
+            for(int j=i+1; j<prices.length; j++)
+            {
+                profit= Math.max(prices[j]-buy, profit);
+            }
+        }
+
+        return profit;
+    }
+}
+
+class Solution {
+    public int maxProfit(int[] prices) {
+        int minPrice = Integer.MAX_VALUE;
+        int profit = 0;
+        for(int i=0; i<prices.length; i++)
+        {
+            if(prices[i] < minPrice)
+            {
+                minPrice = prices[i];
+            }
+            else
+            {
+                profit = Math.max(prices[i] - minPrice, profit);
+            }
+        }
+
+        return profit;
+    }
+}
+//In the beginning
+// minPrice is initialized to the maximum value that an int can hold, which is 2147483647
+// maxProfit is initialized to 0
+
+// In the first iteration:
+// minPrice is updated to 7, which is the first element in the prices array
+// maxProfit is not updated because prices[i] - minPrice is not greater than maxProfit
+
+// In the second iteration:
+// minPrice is updated to 1, which is the second element in the prices array
+// maxProfit is not updated because prices[i] - minPrice is not greater than maxProfit
+
+// In the third iteration:
+// minPrice is not updated because prices[i] is not less than minPrice
+// maxProfit is updated to 5, which is the maximum profit that can be made by buying at the price of 1 and selling at the price of 5
+
+// In the fourth iteration:
+// minPrice is not updated because prices[i] is not less than minPrice
+// maxProfit is not updated because prices[i] - minPrice is not greater than maxProfit
+
+// In the fifth iteration:
+// minPrice is not updated because prices[i] is not less than minPrice
+// maxProfit is not updated because prices[i] - minPrice is not greater than maxProfit
+
+// In the sixth iteration:
+// minPrice is not updated because prices[i] is not less than minPrice
+// maxProfit is not updated because prices[i] - minPrice is not greater than maxProfit
+
+// So at the end of the loop, minPrice is 1 and maxProfit is 5.
+
+
 class Solution {
     public int maxProfit(int[] prices) {
         int min = prices[0];
