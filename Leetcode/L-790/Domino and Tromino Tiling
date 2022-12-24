@@ -1,0 +1,73 @@
+class Solution {
+    public int numTilings(int n) {
+        if(n <= 2)
+            return n;
+        int mod = 1000000007;
+        long[] dp = new long[n + 1];
+        dp[0] = 1;
+        dp[1] = 1;
+        dp[2] = 2;
+        for (int i = 3; i <= n; i++) {
+            if(i <= 2)
+                dp[i] = i;
+            dp[i] = (dp[i - 1]*2 + dp[i - 3]) % mod;
+        }
+        return (int)dp[n];
+    }
+}
+// dp[0] = 1
+// dp[1] = 1
+// dp[2] = 2
+// dp[3] = (dp[2]2 + dp[0]) % mod = (22 + 1) % mod = 5 % mod = 5
+
+//n = 5
+// Here is the value of the dp array for n = 5:
+// dp[0] = 1
+// dp[1] = 1
+// dp[2] = 2
+// dp[3] = (dp[2]*2 + dp[0]) % mod = (2*2 + 1) % mod = 5
+// dp[4] = (dp[3]*2 + dp[1]) % mod = (5*2 + 1) % mod = 11
+// dp[5] = (dp[4]*2 + dp[2]) % mod = (11*2 + 2) % mod = 24
+
+class Solution {
+    public int numTilings(int n) {
+        if(n <= 2)
+            return n;
+
+        int mod = 1000000007;
+        long a = 1, b = 1, c = 2;
+        
+        for (int i = 3; i <= n; i++) {
+            long d = (c*2 + a) % mod;
+            a = b;
+            b = c;
+            c = d;
+        }
+        return (int)c;
+    }
+}
+// On the first iteration, when i is 3:
+
+// a is 1
+// b is 1
+// c is 2
+// d is calculated as (c*2 + a) % mod which is (2*2 + 1) % mod which is 5
+// So the values of a, b, c, and d for n equal to 3 are:
+
+// a is 1
+// b is 1
+// c is 2
+// d is 5
+// On the next iteration, when i is 4:
+
+// a is updated to be b, which is 1
+// b is updated to be c, which is 2
+// c is updated to be d, which is 5
+// d is calculated as (c*2 + a) % mod which is (5*2 + 1) % mod which is 11
+// So the values of a, b, c, and d for n equal to 4 are:
+
+// a is 1
+// b is 2
+// c is 5
+// d is 11
+
