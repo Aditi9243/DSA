@@ -1,0 +1,134 @@
+//Input Array => prices = [1,2,3,0,2]
+
+class Solution {
+    public int maxProfit(int[] prices) {
+        //(1) We have to `rest` before we `buy` and 
+        //(2) we have to `buy` before we `sell`
+        int n = prices.length;
+        int[] buy = new int[n+1];
+        int[] sell = new int[n+1];
+        int[] cooldown = new int[n+1];
+
+        buy[0] = Integer.MIN_VALUE;
+        sell[0] = 0;
+        cooldown[0] = 0;
+        for(int i=1; i<=n; i++)
+        {
+            buy[i]  = Math.max(cooldown[i-1]-prices[i-1], buy[i-1]);
+            sell[i] = Math.max(buy[i-1]+prices[i-1], sell[i-1]);
+            cooldown[i] = Math.max(sell[i-1], Math.max(buy[i-1], cooldown[i-1]));
+        }
+    
+        return sell[n];
+    }
+}
+//buy: [MIN_VALUE, -1, -1, -3, -3, -1]
+// sell: [0, 0, 2, 2, 2, 3]
+// cooldown: [0, 0, 0, 0, 2, 3]
+
+class Solution {
+    public int maxProfit(int[] prices) {
+        //(1) We have to `rest` before we `buy` and 
+        //(2) we have to `buy` before we `sell`
+        int n = prices.length;
+        int[] buy = new int[n+1];
+        int[] sell = new int[n+1];
+
+        buy[0] = 0;
+        sell[0] = 0;
+        buy[1] = -prices[0];
+        for(int i=2; i<=n; i++)
+        {
+            buy[i] = Math.max(sell[i-2]-prices[i-1], buy[i-1]);
+            sell[i] = Math.max(buy[i-1]+prices[i-1], sell[i-1]);
+        }
+    
+        return sell[n];
+    }
+}
+// buy: [0, -1, -1, -3, -3, 0]
+// sell: [0, 0, 2, 2, 2, 3]
+
+// using Hashmap
+class Solution {
+    public int maxProfit(int[] prices) {
+        return helper(0, true, prices, new HashMap<>());
+    }
+
+    private int helper(int i, boolean buying, int[] prices, HashMap<String, Integer> dp)
+    {
+        //buy = i+1
+        //sell = i+2
+        //one choice is always cooldown
+        if(i >= prices.length)
+            return 0;
+        String currKey = i +"_"+ buying;
+        if(dp.containsKey(currKey))
+            return dp.get(currKey);
+
+        int profit = 0;
+        int cooldown = helper(i+1, buying, prices, dp);
+        if(buying == true)
+        {
+            int buy = helper(i+1, !buying, prices, dp) - prices[i];
+            // int cooldown = helper(i+1, buying, prices, dp);
+            profit = Math.max(buy, cooldown);
+            dp.put(currKey, profit);
+        }
+        else
+        {
+            int sell = helper(i+2, !buying, prices, dp) + prices[i];
+            // int cooldown = helper(i+1, buying, prices, dp);
+            profit = Math.max(sell, cooldown);
+            dp.put(currKey, profit);    //This is called caching - Reduce the time complexity from 2^n to n
+        }
+
+        return profit;
+    }
+}
+//dp: {0_true=-1, 1_false=2, 1_true=0, 2_false=2, 3_true=0, 4_false=3}
+
+class Solution {
+    public int maxProfit(int[] prices) {
+        int sell = 0, prevSell = 0, buy = Integer.MIN_VALUE, prevBuy = 0;
+        for(int price : prices)
+        {
+            prevBuy = buy;
+            buy = Math.max(prevSell-price, prevBuy);
+            prevSell = sell;
+            sell = Math.max(prevBuy+price, prevSell);
+        }  
+
+        return sell; 
+    }
+}
+// Iteration 1:
+// sell = 0
+// prevSell = 0
+// buy = -1
+// prevBuy = 0
+
+// Iteration 2:
+// sell = 2
+// prevSell = 0
+// buy = 0
+// prevBuy = -1
+
+// Iteration 3:
+// sell = 2
+// prevSell = 2
+// buy = 0
+// prevBuy = 0
+
+// Iteration 4:
+// sell = 2
+// prevSell = 2
+// buy = 0
+// prevBuy = 0
+
+// Iteration 5:
+// sell = 3
+// prevSell = 2
+// buy = 0
+// prevBuy = 0
+

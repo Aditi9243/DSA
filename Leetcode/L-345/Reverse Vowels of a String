@@ -1,0 +1,67 @@
+class Solution {
+    public String reverseVowels(String s) {
+        // if(s.length() <= 1)
+        // {
+        //     return s;
+        // }
+
+        // int i = 0;
+        // int j = s.length()-1;
+
+        // while(i<j)
+        // {
+        //     char ch1 = s.charAt(i);
+        //     char ch2 = s.charAt(j);
+
+        //     if((ch1 == 'a' || ch1 == 'e' || ch1 == 'i' || ch1 == 'o' || ch1 == 'u') && (ch2 == 'a' || ch2 == 'e' || ch2 == 'i' || ch2 == 'o' || ch2 == 'u'))
+        //     {
+        //         s = s.substring(0,i) + ch2 + s.substring(i+1, j) + ch1 + s.substring(j+1);
+        //         i++;
+        //         j--;
+        //     }
+
+        //     if(ch1 != 'a' || ch1 != 'e' || ch1 != 'i' || ch1 != 'o' || ch1 != 'u')
+        //     {
+        //         i++;
+        //     }
+
+        //     // if(ch2 != 'a' || ch2 != 'e' || ch2 != 'i' || ch2 != 'o' || ch2 != 'u')
+        //     else
+        //     {
+        //         j--;
+        //     }
+
+        // }
+        // return s;
+
+        char[] list=s.toCharArray();
+        Set<Character> set=new HashSet<>();
+        // Set<Character> vowels = new HashSet<>(Arrays.asList(new Character[]{'a','e','i','o','u','A','E','I','O','U'}));
+        set.add('a');
+        set.add('e');
+        set.add('i');
+        set.add('o');
+        set.add('u');
+        set.add('A');
+        set.add('E');
+        set.add('I');
+        set.add('O');
+        set.add('U');
+        for (int i=0, j=list.length-1; i<j; ) {
+            if (!set.contains(list[i])) {
+                i++;
+                continue;
+            }
+            if (!set.contains(list[j])) {
+                j--;
+                continue;
+            }
+            char temp=list[i];
+            list[i]=list[j];
+            list[j]=temp;
+            i++;
+            j--;
+        }
+        return String.valueOf(list);
+    }
+}

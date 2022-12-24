@@ -88,3 +88,48 @@ The parent of person 11 and person 55 is person 44
 in which case persons number 11 and 44 would be telling the truth.
 
 However, it can be shown that it is impossible for any three of them to be simultaneously telling the truth.
+
+**************************************************************************
+/* package codechef; // don't place package name! */
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+/* Name of the class has to be "Main" only if the class is public. */
+class Codechef
+{
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		// your code goes here
+		Scanner scn = new Scanner(System.in);
+		int t = scn.nextInt();
+		
+		while(t-- > 0)
+		{
+		    int n = scn.nextInt();
+		    int []arr = new int[n];
+		    
+		    for(int i=0; i<n; i++)
+		    {
+		        arr[i] = scn.nextInt();
+		    }
+		    
+		    Arrays.sort(arr);
+		    int sum = 0;
+		    int j = 0;
+		    while(j < n && sum < n)
+		    {
+		        sum += arr[j];
+		        j++;
+		    }
+		    
+		    if(sum >= n)
+		    {
+		        j--;
+		    }
+		    
+		    System.out.println(j);
+		}
+	}
+}
