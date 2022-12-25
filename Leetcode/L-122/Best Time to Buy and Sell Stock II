@@ -1,4 +1,5 @@
 // prices = {7, 1, 5, 3, 6, 4};
+
 class Solution {
     public int maxProfit(int[] prices) {
         int lastBuy = -prices[0], lastSold = 0;
@@ -14,3 +15,93 @@ class Solution {
         return lastSold;
     }
 }
+
+//Buy at valleys and sell at peaks -> valley is low price and peak is high price day
+class Solution {
+    public int maxProfit(int[] prices) {
+        // profit: maximum total profit.
+        // buy: the day when buy stock.
+        // sell: the day when sell stock.
+        // days: maximum trade days.
+        
+        int profit = 0, buy = 0, sell = 0, days = prices.length;
+
+        while(buy < days && sell < days)
+        {
+            while(buy < days-1 && prices[buy+1] < prices[buy])
+                buy++;
+
+            sell = buy;
+            while(sell < days-1 && prices[sell+1] > prices[sell])
+                sell++;
+
+            profit += prices[sell] - prices[buy];
+            buy = sell+1;
+        }
+
+        return profit;
+    }
+}
+
+class Solution {
+    public int maxProfit(int[] prices) {
+        // profit: maximum total profit.
+        // buy: price on the day when buy stock.
+        // sell: price on the day when sell stock.
+        // days: maximum trade days.
+        
+        int i = 0, profit = 0, buy, sell, days = prices.length-1;
+
+        while(i < days)
+        {
+            while(i < days && prices[i+1] <= prices[i])
+                i++;
+            buy = prices[i];
+
+            while(i < days && prices[i+1] > prices[i])
+                i++;
+            sell = prices[i];
+
+            profit += sell - buy;
+        }
+
+        return profit;
+    }
+}
+
+// 7
+//                  6
+//         5
+//              3
+//     1
+// 1 & 3 are valleys - buy
+// 5 & 6 are peaks - sell
+
+class Solution {
+    public int maxProfit(int[] prices) {
+        // profit: maximum total profit.
+        // days: maximum trade days.
+        
+        int profit = 0, days = prices.length-1;
+
+        for(int i=0; i<days; i++)   //i=1 to i<=days
+        {
+            profit += Math.max(0, prices[i+1] - prices[i]); // prices[i-1] - prices[i]
+        }
+
+        return profit;
+    }
+}
+
+// Iteration	i	  prices[i]	    prices[i+1]	     prices[i+1] - prices[i]	   profit
+//     1	    0	       7	        1	                   -6	                  0
+//     2	    1	       1	        5	                    4	                  4
+//     3	    2	       5	        3	                   -2	                  4
+//     4	    3	       3	        6	                    3	                  7<=
+
+// prices = [1,2,3,4,5]
+// Iteration	i	  prices[i]	    prices[i+1]	     prices[i+1] - prices[i]	   profit
+//     1	    0	       1	        2	                    1	                  1
+//     2	    1	       2	        3	                    1	                  2
+//     3	    2	       3	        4	                    1	                  3
+//     4	    3	       4	        5	                    1	                  4<=
