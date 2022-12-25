@@ -1,0 +1,126 @@
+//TLE
+//Time complexity is O(kn^2), space complexity is O(kn).
+
+class Solution {
+    public int maxProfit(int[] prices) {
+        int n = prices.length;
+        int k = 2; //atmost transaction
+        int [][] dp = new int[k+1][n];
+
+        for(int x = 1; x <= k; x++)
+        {
+            for(int i=1; i<n; i++)
+            {
+                int min = prices[0];
+                // `min` variable is updated to the minimum value seen so far
+                // minimum of the current value of min and the value prices[j] - dp[x-1][j-1].
+
+                //prices[j] - dp[x-1][j-1] represents the maximum profit
+                //obtained by making x-1 transactions using the prices from the first j-1 days
+                for(int j=1; j<=i; j++)
+                {
+                    min = Math.min(min, prices[j]-dp[x-1][j-1]);
+                }
+
+                dp[x][i] = Math.max(dp[x][i-1], prices[i]-min);
+            }
+        }
+
+        return dp[k][n-1];
+    }
+}
+
+//TLE
+//Version 2: Get rid of repeating calculation of min
+//Time complexity is O(kn), space complexity is O(kn).
+class Solution {
+    public int maxProfit(int[] prices) {
+        int n = prices.length;
+        int k = 2; //atmost transaction
+        int [][] dp = new int[k+1][n];
+
+        for(int x = 1; x <= k; x++)
+        {
+            for(int i=1; i<n; i++)
+            {
+                int min = prices[0];
+                // `min` variable is updated to the minimum value seen so far
+                // minimum of the current value of min and the value prices[j] - dp[x-1][j-1].
+
+                //prices[j] - dp[x-1][j-1] represents the maximum profit
+                //obtained by making x-1 transactions using the prices from the first j-1 days
+                for(int j=1; j<=i; j++)
+                {
+                    min = Math.min(min, prices[j]-dp[x-1][j-1]);
+                    dp[x][i] = Math.max(dp[x][i-1], prices[i]-min);
+
+                }
+            }
+        }
+
+        return dp[k][n-1];
+    }
+}
+
+// Version 3 : swap the two 'for' loops,save min for each transaction.
+//2D dp is used
+class Solution {
+    public int maxProfit(int[] prices) {
+        int n = prices.length;
+        int k = 2; //atmost transaction
+        int [][] dp = new int[k+1][n];
+        int [] min = new int[k+1];
+        Arrays.fill(min, prices[0]);
+
+        for(int i=1; i<n; i++)
+        {
+            for(int x = 1; x <= k; x++)
+            {
+                min[x]= Math.min(min[x], prices[i] - dp[x-1][i-1]);
+                dp[x][i] = Math.max(dp[x][i-1], prices[i] - min[x]);
+            }
+        }
+        return dp[k][n-1];
+    }
+}
+
+//Version 4: compact i
+//1D dp is used
+class Solution {
+    public int maxProfit(int[] prices) {
+        int n = prices.length;
+        int k = 2; //atmost transaction
+        int [] dp = new int[k+1];
+        int [] min = new int[k+1];
+        Arrays.fill(min, prices[0]);
+
+        for(int i=1; i<n; i++)
+        {
+            for(int x = 1; x <= k; x++)
+            {
+                min[x]= Math.min(min[x], prices[i] - dp[x-1]);
+                dp[x] = Math.max(dp[x], prices[i] - min[x]);
+            }
+        }
+        return dp[k];
+    }
+}
+
+//Version 5: Optimized code
+class Solution {
+    public int maxProfit(int[] prices) {
+        int n = prices.length;
+        // int k = 2; //atmost transaction
+        int buy1 = Integer.MAX_VALUE, buy2 = Integer.MAX_VALUE;
+        int sell1 = 0, sell2 = 0;
+
+        for(int i=0; i<n; i++)
+        {
+            buy1 = Math.min(buy1, prices[i]);
+            sell1 = Math.max(sell1, prices[i] - buy1);
+            buy2 = Math.min(buy2, prices[i] - sell1);
+            sell2 = Math.max(sell2, prices[i] - buy2);
+        }
+        return sell2;
+    }
+}
