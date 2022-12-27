@@ -1,0 +1,39 @@
+class Solution {
+    public int maximumBags(int[] capacity, int[] rocks, int additionalRocks) {
+        int ans = 0;
+        for(int i=0; i<capacity.length; i++)
+        {
+            rocks[i] = capacity[i] - rocks[i];  //will give the rocks to fill it completely
+        }
+        Arrays.sort(rocks); //Quick sort
+        for(int i=0; i<rocks.length && additionalRocks-rocks[i]>=0; i++)
+        {
+            additionalRocks -= rocks[i];
+            ans++;
+        }
+        return ans;
+    }
+}
+// Time - O(NlogN)
+// Space - O(1)
+
+// additionalRocks means remaining
+// find difference for each [ i ] bag
+// then start subtracting additionalrocks to difference from low -> high
+// or you can add the count of stones required and then compare to additionalrocks from low -> high
+class Solution {
+    public int maximumBags(int[] capacity, int[] rocks, int additionalRocks) {
+        int ans = 0,count =0;
+        for(int i=0; i<capacity.length; i++)
+        {
+            rocks[i] = capacity[i] - rocks[i];  //will give the rocks to fill it completely
+        }
+        Arrays.sort(rocks); //Quick sort
+        for(int i=0; i<rocks.length && count+rocks[i] <= additionalRocks; i++)
+        {
+            count += rocks[i];
+            ans++;
+        }
+        return ans;
+    }
+}
