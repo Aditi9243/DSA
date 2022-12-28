@@ -1,0 +1,102 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    private int count(ListNode head)
+    {
+        int count = 0;
+        for(; head != null; head = head.next)
+            count++;
+        return count;
+    }
+
+    public int pairSum(ListNode head) {
+        int ans = Integer.MIN_VALUE;
+        ListNode left = head;
+
+        //Find the mid of linked list
+        ListNode slow = head;
+        ListNode fast = head;
+        ListNode prev = head;
+        while(fast != null && fast.next != null)
+        {
+            prev = slow;
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        //reverse the half linked list
+        ListNode right = reverse(slow);
+        prev.next = right;
+
+        //Find the count of nodes
+        int n = count(head);
+
+        //Fint the pair sum
+        for(int i=0; i<n/2; i++)
+        {
+            int sum = left.val + right.val;
+            if(sum > ans)
+                ans = sum;
+            
+            left = left.next;
+            right = right.next;
+        }
+        return ans;
+    }
+
+    private ListNode reverse(ListNode head)
+    {
+        if(head == null || head.next == null)
+        {
+            return head;
+        }
+
+        ListNode prev = null;
+        ListNode curr = head;
+        while(curr != null)
+        {
+            ListNode fwd = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = fwd;
+        }
+
+        head = prev;
+        return head;
+    }
+}
+
+//By recursion
+class Solution {
+    int ans = Integer.MIN_VALUE;
+    ListNode left;
+    public int pairSum(ListNode head) {
+        left = head;
+        helper(head);
+        return ans;
+    }
+
+    private void helper(ListNode right)
+    {
+        if(right == null)
+        {
+            return;
+        }
+
+        helper(right.next);
+        int sum = left.val + right.val;
+        left = left.next;
+        if(ans < sum)
+        {
+            ans = sum;
+        }
+    }
+}
