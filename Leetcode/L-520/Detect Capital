@@ -1,0 +1,30 @@
+class Solution {
+    public boolean detectCapitalUse(String word) {
+        int countCapital = 0;
+        for(char ch : word.toCharArray())
+        {
+            if('Z' - ch >= 0)
+            {
+                countCapital++;
+            }
+        }
+
+        return (countCapital==0 || countCapital==word.length() || (countCapital==1 && 'Z'-word.charAt(0) >= 0));
+    }
+}
+
+class Solution {
+    public boolean detectCapitalUse(String word) {
+        return (word.equals(word.toLowerCase()) || word.equals(word.toUpperCase()) || word.substring(1).equals(word.substring(1).toLowerCase()));
+    }
+}
+
+class Solution {
+    public boolean detectCapitalUse(String word) {
+        if(word.equals(word.toUpperCase()))
+            return true;
+        if(word.substring(1).equals(word.substring(1).toLowerCase()))
+            return true;
+        return false;
+    }
+}
