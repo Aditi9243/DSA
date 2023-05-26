@@ -1,0 +1,89 @@
+//Code with explaination
+class Solution {
+    public void nextPermutation(int[] nums) {
+        int i,j;
+
+        //1. Find where decreasing series is breaking
+        //0 1 2 5 4 3 0
+        for(i=nums.length-2; i>=0; i--)
+        {
+            if(nums[i] < nums[i+1])
+                break;  //found the number (pivot) after which decreasing series starts
+
+            //Here it is 0 1 [2] 5 4 3 0
+        }
+
+        //2. Find the number next to the pivot number from backward which is just greater than the pivot
+        if(i>=0)
+        {
+            for(j=nums.length-1; j>=0; j--)
+            {
+                if(nums[j] > nums[i])
+                    break;  //found the number just greater than pivot
+            }
+
+            //Here it is 0 1 2 5 4 [3] 0
+
+            //3. Swap the pivot and this number
+            swap(nums, i, j);   //swapping 2 and 3
+        }
+
+        //if i<0 => this implies that the given permutation is in decreasing order
+
+        //4. Reverse the decreasing series ie from i+1 to end
+        //reversing the part 0 1 3 [5 4 2 0]
+        reverse(nums, i+1, nums.length-1);
+    }
+
+    private void swap(int [] nums, int i, int j)
+    {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+
+    private void reverse(int [] nums, int i, int j)
+    {
+        while(i < j)
+        {
+            swap(nums, i++, j--);
+        }
+    }
+}
+//Final ans = 0 1 3 0 2 3 5
+
+//Different way for writing loops
+class Solution {
+    public void nextPermutation(int[] nums) {
+        if(nums == null || nums.length < 2)
+            return;
+        
+        int i = nums.length-2;
+        while(i >= 0 && nums[i] >= nums[i+1])
+            i--;
+        
+        if(i >= 0)
+        {
+            int j = nums.length-1;
+            while(nums[j] <= nums[i])
+                j--;
+            
+            swap(nums, i, j);
+        }
+        
+        reverse(nums, i+1, nums.length-1);
+    }
+    
+    private void swap(int[] nums, int i, int j)
+    {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+    
+    private void reverse(int[] nums, int i, int j)
+    {
+        while(i < j)
+            swap(nums, i++, j--);
+    }
+}
