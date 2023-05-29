@@ -1,0 +1,51 @@
+//Interviewbit
+
+You are given a read only array of n integers from 1 to n.
+
+Each integer appears exactly once except A which appears twice and B which is missing.
+
+Return A and B.
+
+Example:
+
+Input:[3 1 2 5 3] 
+
+Output:[3, 4] 
+
+A = 3, B = 4
+
+//Solution using Hashmap
+
+public class Solution {
+    // DO NOT MODIFY THE LIST. IT IS READ ONLY
+    public ArrayList<Integer> repeatedNumber(final List<Integer> A) {
+        ArrayList<Integer> ans = new ArrayList<>();
+
+        Map<Integer, Integer> map = new HashMap<>();
+        int dupli = -1;
+        int originalSum = 0;
+        int arraySum = 0;
+
+        for(int i=1; i<=A.size(); i++)
+            originalSum += i;
+
+        for(int i=0; i<A.size(); i++)
+            arraySum += A.get(i);
+
+        for(int i=0; i<A.size(); i++){
+            if(map.containsKey(A.get(i))){
+                dupli = A.get(i); //duplicate number
+                break;
+            }else{
+                map.put(A.get(i), 1);
+            }
+        }
+
+        int resSum = arraySum - dupli;
+        int misNum = originalSum - resSum; //missing number
+        
+        ans.add(dupli);
+        ans.add(misNum);
+        return ans;
+    }
+}

@@ -1,0 +1,44 @@
+class Solution {
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        if(n == 0)
+            return;
+
+        int j=0;    //Step 1. Adding the elements of nums2 to nums1
+        for(int i=m; i<nums1.length; i++)
+        {
+            nums1[i] = nums2[j++];
+        }
+
+        Arrays.sort(nums1); //Step 2. Sorting the array nums1
+    }
+}
+
+//Adding elements to the array by sorting
+class Solution {
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        if(n == 0)
+            return;
+
+        //Start moving from end of array and compare the elements
+        //Put the elemnts in decr order
+        int i=m-1, j=n-1, k=m+n-1;
+        while(i >= 0 && j >= 0)
+        {
+            if(nums1[i] > nums2[j])
+            {
+                nums1[k--] = nums1[i--];
+            }
+            else
+            {
+                nums1[k--] = nums2[j--];
+            }
+        }
+
+        //for left-out elements
+        //while i>=0 not required since the values will be present in correct position in nums1
+        while(j >= 0)
+        {
+            nums1[k--] = nums2[j--];
+        }
+    }
+}

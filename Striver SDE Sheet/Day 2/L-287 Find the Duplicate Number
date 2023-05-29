@@ -1,0 +1,40 @@
+class Solution {
+    public int findDuplicate(int[] nums) {
+        boolean [] p = new boolean[nums.length+1];
+        int ans = 0;
+        for(int i=0; i<nums.length; i++)
+        {
+            if(p[nums[i]] == true)
+            {
+                ans = nums[i];
+                break;
+            }
+            p[nums[i]] = true;
+        }
+
+        return ans;
+    }
+}
+
+
+class Solution {
+    public int findDuplicate(int[] nums) {
+        Arrays.sort(nums);
+
+        for(int i=1; i<nums.length; i++)
+        {
+            if(nums[i-1] == nums[i])
+            {
+                return nums[i];
+            }
+        }
+
+        return -1;
+    }
+}
+
+//Set datastructure
+
+//Binary Search
+
+//Other approaches - https://leetcode.com/problems/find-the-duplicate-number/solutions/1892921/9-approaches-count-hash-in-place-marked-sort-binary-search-bit-mask-fast-slow-pointers/
