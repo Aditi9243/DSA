@@ -1,0 +1,14 @@
+//Coding Ninjas
+Problem Statement : Inversion count in Array (using Merge Sort)
+
+Given an array arr[]. The task is to find the inversion count of arr[]. Where two elements arr[i] and arr[j] form an inversion if a[i] > a[j] and i < j.
+
+Input: arr[] = {8, 4, 2, 1}
+Output: 6
+Explanation: Given array has six inversions: (8, 4), (4, 2), (8, 2), (8, 1), (4, 1), (2, 1).
+
+//Using 2 for loops
+
+//Using merge sort
+
+//https://www.geeksforgeeks.org/inversion-count-in-array-using-merge-sort/
