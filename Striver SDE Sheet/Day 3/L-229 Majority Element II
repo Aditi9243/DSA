@@ -1,0 +1,110 @@
+class Solution {
+    public List<Integer> majorityElement(int[] nums) {
+        Arrays.sort(nums);
+
+        List<Integer> ans = new ArrayList<>();
+        int count = 0, num = nums[0];
+        for(int i=0; i<nums.length; i++)
+        {
+            if(nums[i] == num)
+            {
+                count++;
+            }
+
+            else
+            {
+                count = 1;
+                num = nums[i];
+            }
+
+            if(count > nums.length/3)
+            {
+                if(!ans.contains(num))
+                    ans.add(num);
+            }
+        }
+
+        return ans;
+    }
+}
+
+class Solution {
+    public List<Integer> majorityElement(int[] nums) {
+        List<Integer> ans = new ArrayList<>();
+        HashMap<Integer, Integer> hm = new HashMap<>();
+        for(int i=0; i<nums.length; i++)
+        {
+            hm.put(nums[i], hm.getOrDefault(nums[i], 0)+1);
+        }
+
+        for(int x : hm.keySet())
+        {
+            if(hm.get(x) > nums.length/3)
+            {
+                ans.add(x);
+            }
+        }
+
+        return ans;
+    }
+}
+
+//Boyer-Moore Majority Vote algorithm
+class Solution {
+    public List<Integer> majorityElement(int[] nums) {
+        List<Integer> ans = new ArrayList<>();
+        if(nums.length == 0)
+            return ans;
+
+        //There can be at most k - 1 major element in an array if the major element appears more than ⌊n / k⌋ times
+
+        //Here there will be two major elements
+        // In the begining, both Trump and Biden don't get a vote
+        int firstMajor = Integer.MAX_VALUE, secondMajor = Integer.MIN_VALUE;    //Two candidates
+        int firstSum = 0, secondSum = 0;    //Vote count
+
+        for(int i=0; i<nums.length; i++)
+        {
+            // case 1: I want to vote for Biden or Trump
+            if (nums[i] == firstMajor)
+                firstSum++;
+            else if (nums[i] == secondMajor)
+                secondSum++;
+
+            // case 2: I want to run for the president
+            else if (firstSum == 0) {
+                firstMajor = nums[i];
+                firstSum = 1;
+            }
+            else if (secondSum == 0) {
+                secondMajor = nums[i];
+                secondSum = 1;
+            }
+
+            // case 3: Leave sleepy Joe and crazy Trump, let James be the president
+            else {
+                firstSum--;
+                secondSum--;
+            }
+        }
+
+        // After election, we need to count the vote again.
+        firstSum = 0;
+        secondSum = 0;
+
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] == firstMajor)
+                firstSum++;    
+         
+            else if (nums[i] == secondMajor)
+                secondSum++;
+        }
+
+        if (firstSum > nums.length / 3)
+            ans.add(firstMajor);
+        if (secondSum > nums.length / 3)
+            ans.add(secondMajor);
+
+        return ans;
+    }
+}
