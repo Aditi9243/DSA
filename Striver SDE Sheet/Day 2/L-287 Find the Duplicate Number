@@ -34,7 +34,80 @@ class Solution {
 }
 
 //Set datastructure
+class Solution {
+    public int findDuplicate(int[] nums) {
+        HashSet<Integer> set = new HashSet<>();
+
+        for(int i=0; i<nums.length; i++)
+        {
+            if(!set.add(nums[i]))
+            {
+                return nums[i];
+            }
+        }
+
+        return nums.length;
+    }
+}
+
+//Marking visited value within the array
+class Solution {
+    public int findDuplicate(int[] nums) {
+        //Given = all values of the array are between [1, n] inclusive
+
+        //we will scan the array from left to right and will set the nums[idx] = -nums[idx]
+        //where idx = curr nums value, ie, nums[i]
+
+        for(int num : nums)
+        {
+            int i = Math.abs(num);  //since curr nums value can be -ve but index cannot be -ve
+            if(nums[i] < 0)
+            {
+                return i;   //curr value of num with +ve sign
+            }
+            nums[i] = -nums[i];
+        }
+
+        return nums.length; //returning the "n" as ans 
+    }
+}
 
 //Binary Search
+class Solution {
+    public int findDuplicate(int[] nums) {
+        //Pigeonhole Principle => Binary Search
+        //According to this Principle, 
+        //n+1 integers are placed in an array of length n, at least 1 integer will be repeated.
+
+        //Process
+        //Find mid in range[left, right] and count elements which is <= arr[mid]
+        //if (count > mid) then repeated elements are in [left, mid]
+        //else repeated element is in [mid+1, end]
+
+        int low = 1;
+        int high = nums.length - 1;
+        while(low < high)
+        {
+            int mid = low + (high - low)/2;
+            int count = 0;
+            for(int i=0; i<nums.length; i++)
+            {
+                if(nums[i] <= mid)
+                    count++;
+            }
+
+            if(count <= mid)
+            {
+                low = mid+1;
+            }
+            else
+            {
+                high = mid;
+            }
+        }
+
+        return low;
+    }
+}
 
 //Other approaches - https://leetcode.com/problems/find-the-duplicate-number/solutions/1892921/9-approaches-count-hash-in-place-marked-sort-binary-search-bit-mask-fast-slow-pointers/
