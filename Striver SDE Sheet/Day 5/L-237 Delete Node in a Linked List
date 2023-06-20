@@ -1,0 +1,30 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public void deleteNode(ListNode node) {
+        node.val = node.next.val;
+        node.next = node.next.next;
+    }
+}
+
+//Give =n it is not a tail node, then no need of if condition
+class Solution {
+    public void deleteNode(ListNode node) {
+        if(node.next == null)
+            node = null;
+
+        else
+        {
+            int val = node.next.val;
+            node.val = val;
+            node.next = node.next.next;
+        }    
+        
+    }
+}
