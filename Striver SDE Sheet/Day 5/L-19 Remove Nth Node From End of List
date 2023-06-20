@@ -1,0 +1,137 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        if(n==1 && head.next == null || head == null)
+            return null;
+
+        int count = 0;
+        for(ListNode temp = head; temp != null; temp = temp.next, count++);
+
+        if(count == n)
+            return head.next;
+
+        ListNode curr = head, prev = null;
+        for(int i=0; i<count-n; i++)
+        {
+            prev = curr;
+            curr = curr.next;
+        }
+
+        //curr remove
+        prev.next = curr.next;
+        return head;
+    }
+}
+
+//slow fast pointer
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        if(n==1 && head.next == null || head == null)
+            return null;
+
+        ListNode ans = new ListNode(-1);
+        ans.next = head;
+        ListNode fast = head;
+        ListNode slow = ans;
+
+        //Maintain gap of n
+        for(int i=0; i<n; i++)
+        {
+            fast = fast.next;
+        }
+
+        //Move fast to the end maintaing the gap between fast and slow
+        while(fast != null)
+        {
+            slow = slow.next;
+            fast = fast.next;
+        }
+
+        //Skip the nth node from end
+        slow.next = slow.next.next;
+
+        return ans.next;
+    }
+}
+
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        if(n==1 && head.next == null || head == null)
+            return null;
+
+        ListNode ans = new ListNode(-1);
+        ans.next = head;
+        ListNode fast = ans;
+        ListNode slow = ans;
+
+        //Maintain gap of n
+        for(int i=0; i<n; i++)
+        {
+            fast = fast.next;
+        }
+
+        //Move fast to the end maintaing the gap between fast and slow
+        while(fast.next != null)
+        {
+            slow = slow.next;
+            fast = fast.next;
+        }
+
+        //Skip the nth node from end
+        slow.next = slow.next.next;
+
+        return ans.next;
+    }
+}
+
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        int count = 0;
+        for(ListNode temp = head; temp != null; temp = temp.next, count++);
+
+        if(count == n)
+            return head.next;
+
+        ListNode curr = head;
+        for(int i=0; i<count-n-1; i++)
+        {
+            curr = curr.next;
+        }
+
+        //curr remove
+        curr.next = curr.next.next;
+        return head;
+    }
+}
+
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode slow = head, fast = head;
+
+        //Maintain gap of n-1
+        for(int i=0; i<n; i++)
+            fast = fast.next;
+
+        if(fast == null)
+            return head.next;   //n is equal to size of linkedlist
+
+        while(fast.next != null)
+        {
+            slow = slow.next;
+            fast = fast.next;
+        }
+
+        //Remove the desired node
+        slow.next = slow.next.next;
+        return head;
+    }
+}
