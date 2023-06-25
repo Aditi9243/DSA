@@ -1,0 +1,205 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode reverseKGroup(ListNode head, int k) {
+        if (head == null)
+            return null;
+        
+        ListNode node = head;   //checking whether size of list is K
+        for (int i = 0; i < k; i++) {
+            if (node == null)
+                return head;
+            node = node.next;
+        }
+        
+        int count = 0;
+        ListNode curr = head;
+        ListNode prev = null;
+        ListNode next = null;
+        
+        while (curr != null && count < k) {
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+            count++;
+        }
+        
+        if (next != null)
+            head.next = reverseKGroup(next, k);
+        
+        return prev;
+    }
+}
+
+class Solution {
+    public ListNode reverseKGroup(ListNode head, int k) {
+        //Step1. Calculate the size of linkedlist - number of nodes
+        int count = 0;
+        for(ListNode node = head; node != null; node = node.next, count++);
+
+        //Step2. Create a new linkedlist as ans
+        ListNode ans = new ListNode(0);
+        ans.next = head;
+
+        ListNode prev = ans;
+        ListNode tail = head;
+
+        //Step3. Traverse the linkedlist
+        while(count >= k)
+        {
+            //Step4. Reverse linkedlist in k groups
+            for(int i=1; i<k; i++)
+            {
+                ListNode temp = tail.next.next;
+                tail.next.next = prev.next;
+                prev.next = tail.next;
+                tail.next = temp;
+            }
+
+            //Step5. Change the pointer values
+            prev = tail;
+            tail = tail.next;
+            count = count-k;
+        }
+
+        return ans.next;
+    }
+}
+
+class Solution {
+    public ListNode reverseKGroup(ListNode head, int k) {
+        if(head == null || head.next == null || k==1)
+            return head;
+
+        ListNode ans = new ListNode(0);
+        ListNode begin = ans;
+        ans.next = head;
+
+        int i = 0;
+        while(head != null)
+        {
+            i++;
+            if(i%k == 0)
+            {
+                begin = reverse(begin, head.next);
+                head = begin.next;
+            }
+            else
+            {
+                head = head.next;
+            }
+        }
+
+        return ans.next;
+    }
+
+    private ListNode reverse(ListNode start, ListNode end)
+    {
+        //both start and end is excluded
+        ListNode curr = start.next;
+        ListNode prev = start;
+        ListNode next, first;
+
+        first = curr;
+        while(curr != end)
+        {
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        //the prev finally will be the head of reversed LinkedList, 
+        //the original head first will be the tail of reversed LinkedList and 
+        //curr will be the end.
+        start.next = prev;
+        first.next = curr;
+
+        //before reversing the list
+        //* 0->1->2->3->4->5->6
+        //* |           |   
+        //* begin       end
+        //     
+        //after
+        //* 0->3->2->1->4->5->6
+        //*          |  |
+        //*     begin end  // actually, `first` is the `begin`
+
+        return first;
+    }
+}
+
+class Solution {
+    public ListNode reverseKGroup(ListNode head, int k) {
+        ListNode curr = head;
+        int count = 0;
+        //find the k+1th node
+        while(curr != null && count != k)
+        {
+            curr = curr.next;
+            count++;
+        }
+
+        //if k+1th node is found
+        if(count == k)
+        {
+            //First reverse the list with k+1 node as head;
+            curr = reverseKGroup(curr, k);
+
+            //Remember : head is pointing to direct part
+            //curr is pointing to reverse part
+
+            //Reversing current k-group
+            while(count -- > 0)
+            {
+                ListNode temp = head.next;
+                head.next = curr;
+                curr = head;
+                head = temp;
+            }
+
+            head = curr;
+        }
+
+        return head;
+    }
+}
+
+class Solution {
+    public ListNode reverseKGroup(ListNode head, int k) {
+        ListNode node = head;
+        int count = 0;
+        //find the k+1th node
+        while(node != null && count != k)
+        {
+            node = node.next;
+            count++;
+        }
+
+        //if k+1th node is not found
+        if(count != k)
+            return head;
+
+        //First reverse the list with k+1 node as head;
+        ListNode prev = reverseKGroup(node, k); //point to the the answer of sub-problem 
+
+        //Reversing current k-group
+        while(count -- > 0)
+        {
+            ListNode next = head.next;
+            head.next = prev;
+            prev = head;
+            head = next;
+        }
+
+        return prev;
+    }
+}
