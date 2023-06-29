@@ -1,0 +1,129 @@
+class Solution {
+    public int trap(int[] height) {
+        int n = height.length;
+        int[] left = new int[n];
+        int[] right = new int[n];
+
+        //Finding left maximum for each height
+        left[0] = height[0];
+        for(int i=1; i<n; i++)
+        {
+            left[i] = Math.max(left[i-1], height[i]);
+        }
+
+        //Finding right maximum for each height
+        right[n-1] = height[n-1];
+        for(int j=n-2; j>=0; j--)
+        {
+            right[j] = Math.max(right[j+1], height[j]);
+        } 
+
+        //Water = min(leftMax, rightMax) - height
+        int water = 0;
+        for(int i=0; i<n; i++)
+        {
+            water += Math.min(left[i], right[i]) - height[i];
+        }
+        return water;
+    }
+}
+
+//Using less space
+class Solution {
+    public int trap(int[] height) {
+        int n = height.length;
+
+        //Pointers pointing to both ends of array
+        int left = 0;
+        int right = n-1;
+        int maxLeft = 0, maxRight = 0;
+
+        //Water = min(leftMax, rightMax) - height
+        int water = 0;
+        while(left < right)
+        {
+            //Fill water from left to right
+            //Water cannot be filled if current is greater than the previous maximum
+            if(height[left] < height[right])
+            {
+                if(height[left] >= maxLeft)
+                {
+                    //Found new maximum - update the value
+                    maxLeft = height[left];
+                }
+                else
+                {
+                    //Fill the water upto the current maximum
+                    water += maxLeft - height[left];
+                }
+
+                left++;
+            }
+
+            else
+            {
+                if(height[right] >= maxRight)
+                {
+                    maxRight = height[right];
+                }
+                else
+                {
+                    water += maxRight - height[right];
+                }
+
+                right--;
+            }
+        }
+        return water;
+    }
+}
+
+//one more way 
+class Solution {
+    public int trap(int[] height) {
+        int n = height.length;
+
+        //Pointers pointing to both ends of array
+        int left = 1;
+        int right = n-2;
+        int maxLeft = height[0], maxRight = height[n-1];
+
+        //Water = min(leftMax, rightMax) - height
+        int water = 0;
+        while(left <= right)
+        {
+            //Fill water from left to right
+            //Water cannot be filled if current is greater than the previous maximum
+            if(maxLeft < maxRight)
+            {
+                if(height[left] > maxLeft)
+                {
+                    //Found new maximum - update the value
+                    maxLeft = height[left];
+                }
+                else
+                {
+                    //Fill the water upto the current maximum
+                    water += maxLeft - height[left];
+                }
+
+                left++;
+            }
+
+            else
+            {
+                if(height[right] > maxRight)
+                {
+                    maxRight = height[right];
+                }
+                else
+                {
+                    water += maxRight - height[right];
+                }
+
+                right--;
+            }
+        }
+        return water;
+    }
+}
