@@ -1,0 +1,36 @@
+class Solution {
+    public int maxPower(String s) {
+        int count = 1;
+        int ans = count;
+        for(int i=1; i<s.length(); i++)
+        {
+            if(s.charAt(i) == s.charAt(i-1))
+                count++;
+            else
+                count=1;
+            ans = Math.max(ans, count);
+        }
+        return ans;
+    }
+}
+
+//Sliding Window
+class Solution {
+    public int maxPower(String s) {
+        int ans = 0;
+        int start = 0, end = 0;
+        int n = s.length();
+        
+        while(end < n)
+        {
+            while(end < n && s.charAt(end) == s.charAt(start))
+            {
+                ans = Math.max(ans, end-start+1);
+                end++;
+            }
+
+            start = end;
+        }
+        return ans;
+    }
+}
