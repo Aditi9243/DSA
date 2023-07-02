@@ -1,0 +1,120 @@
+//Iterative
+class Solution {
+    public int coinChange(int[] coins, int amount) {
+        if(amount == 0)
+            return 0;
+
+        int dp[] = new int[amount+1];
+        // dp[0] = 0;
+
+        for(int i=1; i<=amount; i++)
+        {
+            int min = Integer.MAX_VALUE;
+            for(int coin : coins)
+            {
+                if(i-coin >= 0 && dp[i-coin] != -1)
+                    min = (dp[i-coin] < min) ? dp[i-coin] : min;
+            }
+
+            //Set dp[i] to -1 if i (current amount) can not be reach by  coins array
+            dp[i] = (min== Integer.MAX_VALUE) ? -1 : min+1;
+        }
+
+        return dp[amount];
+    }
+}
+
+//Recursive
+class Solution {
+    public int min = Integer.MAX_VALUE;
+    public int coinChange(int[] coins, int amount) {
+        helper(coins, amount, coins.length-1, 0);        
+        return min = (min==Integer.MAX_VALUE) ? -1 : min;
+    }
+    
+    public void helper(int [] coins, int amount, int i, int count)
+    {
+        if(i<0 || amount<0) return;
+        if(amount == 0) min = Math.min(min, count);
+        
+        helper(coins, amount-coins[i], i, count+1); //coin selected
+        helper(coins, amount, i-1, count); //coin not selected
+    }
+}
+
+//MEmoization
+class Solution {
+    public int coinChange(int[] coins, int amount) {
+        if(amount < 1)
+            return 0;
+
+        return helper(coins, amount, new int[amount]);        
+    }
+    
+    public int helper(int [] coins, int amount, int count[])
+    {
+        //amount = remaining amount after the last step
+        //count[amount]: minimum number of coins to sum up to amount
+
+        if(amount<0) return -1; //not valid
+        if(amount == 0) return 0;   //valid
+
+        //Already computed, so reuse the value
+        if(count[amount-1] != 0)
+            return count[amount-1];
+
+        int min = Integer.MAX_VALUE;
+        for(int coin : coins)
+        {
+            int recAns = helper(coins, amount-coin, count);
+            if(recAns >= 0 && recAns < min)
+            {
+                min = recAns+1;
+            }
+        }
+        
+        count[amount-1] = (min==Integer.MAX_VALUE) ? -1 : min;
+        return count[amount-1];
+    }
+}
+
+//BFS
+class Solution {
+    public int coinChange(int[] coins, int amount) {
+        if(amount == 0)
+            return 0;
+
+        //BFS
+        Queue<Integer> q = new LinkedList<>();
+        boolean v[] = new boolean[amount+1];
+
+        q.add(amount);
+        v[amount] = true;
+        int currLevel = 1;
+
+        while(!q.isEmpty())
+        {
+            int size = q.size();
+            for(int i=0; i<size; i++)
+            {
+                int curr = q.remove();
+                
+                for(int coin : coins)
+                {
+                    int child = curr - coin;
+                    if(child == 0)
+                        return currLevel;
+
+                    else if(child > 0 && !v[child])
+                    {
+                        v[child] = true;
+                        q.add(child);
+                    }
+                }
+            }
+            currLevel++;
+        }
+
+        return -1;
+    }
+}
