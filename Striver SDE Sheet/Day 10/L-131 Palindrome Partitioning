@@ -1,0 +1,105 @@
+class Solution {
+    public List<List<String>> partition(String s) {
+        List<List<String>> ans = new ArrayList<>();
+        helper(ans, new ArrayList<>(), s, 0);
+        return ans;
+    }
+
+    private void helper(List<List<String>> ans, List<String> temp, String str, int start)
+    {
+        if(start == str.length())
+            ans.add(new ArrayList<>(temp));
+
+        for(int i=start; i<str.length(); i++)
+        {
+            if(isPalindrome(str, start, i))
+            {
+                temp.add(str.substring(start, i+1));
+                helper(ans, temp, str, i+1);
+                temp.remove(temp.size()-1);
+            }
+        }
+    }
+
+    private boolean isPalindrome(String s, int i, int j)
+    {
+        while(i < j)
+        {
+            if(s.charAt(i) != s.charAt(j))
+                return false;
+            i++;
+            j--;
+        }
+        return true;
+    }
+}
+
+//Another Way
+class Solution {
+    public List<List<String>> partition(String s) {
+        List<List<String>> ans = new ArrayList<>();
+        helper(ans, new ArrayList<>(), s);
+        return ans;
+    }
+
+    private void helper(List<List<String>> ans, List<String> temp, String s)
+    {
+        if (s.length() == 0) {
+            ans.add(new ArrayList<>(temp));
+            return;
+        }
+
+        for (int i = 0; i < s.length(); i++) {
+            if (isPalindrome(s, 0, i)) {
+                temp.add(s.substring(0, i + 1));
+                helper(ans, temp, s.substring(i + 1));
+                temp.remove(temp.size() - 1);
+            }
+        }
+    }
+
+    private boolean isPalindrome(String s, int i, int j)
+    {
+        while(i < j)
+        {
+            if(s.charAt(i) != s.charAt(j))
+                return false;
+            i++;
+            j--;
+        }
+        return true;
+    }
+
+}
+
+//DFS Approach with dp
+class Solution {
+    public List<List<String>> partition(String s) {
+        List<List<String>> ans = new ArrayList<>();
+        int l = s.length();
+        boolean[][] dp = new boolean[l][l];
+        dfs(ans, new ArrayList<>(), s, 0, dp);
+        return ans;
+    }
+
+    private void dfs(List<List<String>> ans, List<String> temp, String str, int start, boolean[][] dp)
+    {
+        if(start == str.length())
+            ans.add(new ArrayList<>(temp));
+
+        for(int i=start; i<str.length(); i++)
+        {
+            if(str.charAt(i) != str.charAt(start))
+                continue;
+            
+            if(i-1 > start+1 && !dp[start+1][i-1])
+                continue;
+
+            dp[start][i] = true;
+
+            temp.add(str.substring(start, i+1));
+            dfs(ans, temp, str, i+1, dp);
+            temp.remove(temp.size()-1);
+        }
+    }
+}

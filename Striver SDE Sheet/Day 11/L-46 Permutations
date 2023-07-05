@@ -1,0 +1,78 @@
+class Solution {
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> ans = new ArrayList<>();
+        helper(ans, new ArrayList<>(), nums, 0);
+        return ans;
+    }
+
+    private void helper(List<List<Integer>> ans, List<Integer> temp, int[] nums, int start)
+    {
+        if(temp.size() == nums.length)
+        {
+            ans.add(new ArrayList<>(temp));
+            return;
+        }
+
+        for(int i=0; i<=temp.size(); i++)
+        {
+            temp.add(i, nums[start]);
+            helper(ans, temp, nums, start+1);
+            temp.remove(i);
+        }
+    }
+}
+
+class Solution {
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> ans = new ArrayList<>();
+
+        if(nums.length == 0)
+            return ans;
+        
+        List<Integer> temp = new ArrayList<Integer>();
+        temp.add(nums[0]);
+        ans.add(new ArrayList<>(temp));
+
+        for(int i=1; i<nums.length; i++)
+        {
+            int size = ans.size();
+            for(int j=0; j<size; j++)
+            {
+                for(int x=0; x<ans.get(j).size(); x++)
+                {
+                    List<Integer> newList = new ArrayList<>(ans.get(j));
+                    newList.add(x, nums[i]);
+                    ans.add(newList);
+                }
+                ans.get(j).add(nums[i]);
+            }
+        }
+
+        return ans;
+    }
+}
+
+class Solution {
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> ans = new ArrayList<>();
+
+        if(nums.length == 0)
+            return ans;
+        
+        ans.add(new ArrayList<Integer>());
+        for (int n : nums) {
+            int size = ans.size();
+            while (size > 0) {
+                List<Integer> r = ans.remove(0);
+                for (int i = 0; i <= r.size(); i++) {
+                    List<Integer> temp = new ArrayList<Integer>(r);
+                    temp.add(i, n);
+                    ans.add(temp);
+                }
+                size--;
+            }
+        }
+
+        return ans;
+    }
+}
