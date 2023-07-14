@@ -1,6 +1,6 @@
 class Solution {
     public List<List<String>> solveNQueens(int n) {
-        char [][]chess = new char[n][n];
+        char[][] chess = new char[n][n];
         for(int i=0; i<n; i++)
         {
             for(int j=0; j<n; j++)
@@ -8,65 +8,76 @@ class Solution {
                 chess[i][j] = '.';
             }
         }
-        
+
+        //Currently chess board is empty
+        // '.' => Empty Space
+        // 'Q' => Queen is present
+
         List<List<String>> ans = new ArrayList<>();
-        solution(ans, chess, 0);
+        
+        //Keeping in mind - Only one queen will be present in a row
+        helper(ans, chess, 0);
         return ans;
     }
-    
-    public void solution(List<List<String>> ans, char [][]chess, int row)
+
+    private void helper(List<List<String>> ans, char[][] chess, int row)
     {
         if(row == chess.length)
         {
+            //All Queen is successfully placed
             ans.add(construct(chess));
             return;
         }
-        
+
         for(int col=0; col<chess.length; col++)
         {
-            if(isSafe(chess, row, col))
+            if(isValid(chess, row, col))
             {
                 chess[row][col] = 'Q';
-                solution(ans, chess, row+1);
-                chess[row][col] = '.';                
+                helper(ans, chess, row+1);
+                chess[row][col] = '.';
             }
         }
     }
-    
-    private boolean isSafe(char [][]chess, int row, int col)
+
+    private boolean isValid(char[][] chess, int row, int col)
     {
-        //1. i-1, j+1
-        for(int i=row-1, j=col+1; i>=0 && j<chess.length; i--, j++)
-        {
-            if(chess[i][j] == 'Q')
-                return false;
-        }
-        
-        //2. i-1, j
-        for(int i=row-1, j=col; i>=0; i--)
-        {
-            if(chess[i][j] == 'Q')
-                return false;
-        }
-        
-        //3. i-1, j-1
+        //Checking PREVIOUS ROWS from the current 'row' {Above it!!}
+
+        //1. i-1 j-1 => Left Diagonal
         for(int i=row-1, j=col-1; i>=0 && j>=0; i--, j--)
         {
             if(chess[i][j] == 'Q')
                 return false;
         }
-        
+
+        //2. i-1 j => Same Column
+        for(int i=row-1; i>=0; i--)
+        {
+            if(chess[i][col] == 'Q')
+                return false;
+        }
+
+        //3. i-1 j+1 => Right Diagonal
+        for(int i=row-1, j=col+1; i>=0 && j<chess.length; i--, j++)
+        {
+            if(chess[i][j] == 'Q')
+                return false;
+        }
+
         return true;
     }
-    
-    private List<String> construct(char [][]chess)
+
+    private List<String> construct(char[][] chess)
     {
+        //Converting chess board rows to ArrayList
+
         List<String> path = new ArrayList<>();
         for(int i=0; i<chess.length; i++)
         {
             path.add(new String(chess[i]));
-        }
-        
+        } 
+
         return path;
     }
 }
