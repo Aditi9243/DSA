@@ -1,0 +1,81 @@
+class Solution {
+    public int singleNonDuplicate(int[] nums) {
+        // if(nums.length == 1)
+        //     return nums[0];
+
+        for(int i=1; i<nums.length; i+=2)
+        {
+            if(nums[i] != nums[i-1])
+            {
+                return nums[i-1];
+            }
+        }
+
+        return nums[nums.length-1];
+    }
+}
+
+//Binary Search
+class Solution {
+    public int singleNonDuplicate(int[] nums) {
+        int left = 0, right = nums.length-1;
+        while(left < right)
+        {
+            int mid = (left + right)/2;
+            if(mid % 2 == 1)
+            {
+                mid--;
+            }
+
+            if(nums[mid] != nums[mid+1])
+            {
+                right = mid;
+            }
+            else
+            {
+                left = mid+2;
+            }
+        }
+
+        return nums[left];
+    }
+}
+
+//Another way of Binary Search
+class Solution {
+    public int singleNonDuplicate(int[] nums) {
+        int left = 0, right = nums.length-1;
+        while(left < right)
+        {
+            int mid = left + (right - left)/2;
+
+            // if mid in at even index and assume the single element is not in the left part(nums[0 : mid + 1] inclusively)
+            // the number in mid and the next number should be the same; otherwise, it is in the left part: nums[0 : mid] inclusively 
+            if(mid % 2 == 0)
+            {
+                if(nums[mid] != nums[mid+1])
+                {
+                    right = mid;
+                }
+                else
+                {
+                    left = mid+2;
+                }
+            }
+
+            else
+            {
+                if(nums[mid] != nums[mid-1])
+                {
+                    right = mid;
+                }
+                else
+                {
+                    left = mid+1;
+                }
+            }
+        }
+
+        return nums[left];
+    }
+}
