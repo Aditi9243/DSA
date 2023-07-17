@@ -10,3 +10,115 @@ class Solution {
         return -1;
     }
 }
+
+//Binary Search
+class Solution {
+    public int search(int[] nums, int target) {
+        int low = 0, high = nums.length-1;
+        int mid = 0;
+
+        //Find the smallest element index
+        while(low < high)
+        {
+            mid = (low + high)/2;
+            if(nums[mid] > nums[high])
+            {
+                low = mid+1;
+            }
+            else
+                high = mid;
+        }
+        
+        //Now we know the start point
+        //Find the target where it is present - left or right of start
+        int start = low;
+        low = 0;
+        high = nums.length-1;
+        if(target >= nums[start] && target <= nums[high])
+        {
+            //Target is present right side of an array
+            low = start;
+        }
+        else
+        {
+            //Target is present left side of an array
+            high = start;
+        }
+
+        //Perform regular binary search
+        while(low <= high)
+        {
+            mid = (low + high)/2;
+            if(nums[mid] == target)
+            {
+                return mid;
+            }
+
+            else if(nums[mid] < target)
+            {
+                low = mid+1;
+            }
+            else
+                high = mid-1;
+        }
+
+        return -1;
+    }
+}
+
+//Modular Binary Search
+class Solution {
+    public int search(int[] nums, int target) {
+        //Find the smallest element index
+        int startIdx = findStartIdx(nums);
+
+        if(target == nums[startIdx])
+            return startIdx;
+        
+        //Now we know the start point
+        //Find the target where it is present - left or right of startIdx
+        int n = nums.length;
+        int start = (target <= nums[n-1]) ? startIdx : 0;
+        int end = (target > nums[n-1]) ? startIdx : n-1;
+
+        //Perform regular binary search
+        while(start <= end)
+        {
+            int mid = start + (end - start)/2;
+            if(nums[mid] == target)
+            {
+                return mid;
+            }
+            else if(nums[mid] < target)
+            {
+                start = mid+1;
+            }
+            else
+                end = mid-1;
+        }
+
+        return -1;
+    }
+
+    private int findStartIdx(int[] arr)
+    {
+        int start = 0, end = arr.length-1;
+        while(start < end)
+        {
+            int mid = start + (end - start)/2;
+            if(arr[mid] > arr[end])
+                start = mid+1;
+            else
+                end = mid;
+        }
+
+        return start;
+    }
+}
+
+// Note: 
+// In binary search, we write `int mid = start + (end - start)/2` instead of `mid = (start+end)/2` to avoid potential integer overflow. 
+
+// The expression `(end - start)` calculates the range between `end` and `start`, and dividing it by 2 gives us the midpoint. This approach ensures that the calculation is performed within the range of the integer data type, preventing overflow issues that could occur if `start` and `end` are large numbers.
+
+// By using `(end - start)/2`, we can accurately calculate the midpoint without encountering integer overflow problems, making the binary search algorithm more reliable.
