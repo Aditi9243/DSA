@@ -1,0 +1,140 @@
+//Link - https://www.interviewbit.com/problems/allocate-books/
+
+Problem Description
+ 
+Given an array of integers A of size N and an integer B.
+The College library has N books. The ith book has A[i] number of pages.
+You have to allocate books to B number of students so that the maximum number of pages allocated to a student is minimum.
+1. A book will be allocated to exactly one student.
+2. Each student has to be allocated at least one book.
+3. Allotment should be in contiguous order, for example: A student cannot be allocated book 1 and book 3, skipping book 2.
+Calculate and return that minimum possible number.
+NOTE: Return -1 if a valid assignment is not possible.
+
+Problem Constraints
+1 <= N <= 105
+1 <= A[i], B <= 105
+
+Input Format
+The first argument given is the integer array A.
+The second argument given is the integer B.
+
+Output Format
+Return that minimum possible number.
+
+Example Input
+Input 1:
+A = [12, 34, 67, 90]
+B = 2
+Input 2:
+A = [5, 17, 100, 11]
+B = 4
+
+Example Output
+Output 1:
+113
+Output 2:
+100
+
+//Code
+public class Solution {
+    public int books(int[] A, int B) {
+        //B - Number of students
+        if(B > A.length)
+            return -1;
+        
+        int low = A[0]; //Low will be the maximum no. of pages in a book
+        int high = A[0];
+        for(int i=1; i<A.length; i++)
+        {
+            low = Math.max(low, A[i]);
+            high += A[i];
+        }
+                
+        for(int pages = low; pages <= high; pages++)
+        {
+            if(countStudents(A, pages) == B)
+                return pages;
+        }
+        
+        return low;
+    }
+    
+    private int countStudents(int[] books, int pages)
+    {
+        int n = books.length;
+        int student = 1;
+        long currPages = 0;
+        
+        for(int i=0; i<n; i++)
+        {
+            if(currPages + books[i] <= pages)
+            {
+                currPages += books[i];
+            }
+            
+            else
+            {
+                student++;
+                currPages = books[i];
+            }
+        }
+        
+        return student;
+    }
+}
+
+
+//Binary Search
+public class Solution {
+    public int books(int[] A, int B) {
+        //B - Number of students
+        if(B > A.length)
+            return -1;
+        
+        int low = A[0]; //Low will be the maximum no. of pages in a book
+        int high = A[0];
+        for(int i=1; i<A.length; i++)
+        {
+            low = Math.max(low, A[i]);
+            high += A[i];
+        }
+        
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            int students = countStudents(A, mid);
+            if (students > B) 
+            {
+                low = mid + 1;
+            } 
+            else 
+            {
+                high = mid - 1;
+            }
+        }
+        return low;
+    }
+    
+    private int countStudents(int[] books, int pages)
+    {
+        int n = books.length;
+        int student = 1;
+        long currPages = 0;
+        
+        for(int i=0; i<n; i++)
+        {
+            if(currPages + books[i] <= pages)
+            {
+                currPages += books[i];
+            }
+            
+            else
+            {
+                student++;
+                currPages = books[i];
+            }
+        }
+        
+        return student;
+    }
+}
