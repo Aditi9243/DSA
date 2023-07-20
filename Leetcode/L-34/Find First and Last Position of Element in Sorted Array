@@ -1,0 +1,81 @@
+class Solution {
+    public int[] searchRange(int[] nums, int target) {
+        int[] ans = {-1, -1};
+        for(int i=0; i<nums.length; i++)
+        {
+            if(nums[i] == target && ans[0] == -1)
+            {
+                ans[0] = i;
+            }
+
+            if(nums[i] == target)
+            {
+                ans[1] = i;
+            }
+
+            else if(nums[i] != target && ans[1] != -1)
+            {
+                break;
+            }
+        }
+
+        return ans;
+    }
+}
+
+//Binary Search
+class Solution {
+    public int[] searchRange(int[] nums, int target) {
+        int[] ans = {-1, -1};
+        ans[0] = findStart(nums, target);
+        ans[1] = findEnd(nums, target);
+
+        return ans;
+    }
+
+    private int findStart(int[] nums, int target)
+    {
+        int idx = -1;
+        int start = 0;
+        int end = nums.length - 1;
+        while(start <= end)
+        {
+            int mid = (start+end)/2;
+            if(nums[mid] == target)
+                idx = mid;
+
+            if(nums[mid] >= target)
+            {
+                end = mid-1;
+            }
+            else
+            {
+                start = mid+1;
+            }
+        } 
+        return idx;
+    }
+
+    private int findEnd(int[] nums, int target)
+    {
+        int idx = -1;
+        int start = 0;
+        int end = nums.length - 1;
+        while(start <= end)
+        {
+            int mid = (start+end)/2;
+            if(nums[mid] == target)
+                idx = mid;
+
+            if(nums[mid] > target)
+            {
+                end = mid-1;
+            }
+            else
+            {
+                start = mid+1;
+            }
+        } 
+        return idx;
+    }
+}
