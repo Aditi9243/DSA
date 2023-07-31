@@ -1,0 +1,153 @@
+//TLE - But correct
+class MedianFinder {
+
+    private ArrayList<Integer> arr;
+
+    public MedianFinder() {
+        arr = new ArrayList<>();
+    }
+    
+    public void addNum(int num) {
+        arr.add(num);
+    }
+    
+    public double findMedian() {
+        Collections.sort(arr);
+        int mid = arr.size()/2;
+        if(arr.size() % 2 != 0)
+        {
+            //Odd size
+            return (double)arr.get(mid);
+        }
+        else
+        {
+            return (double)(arr.get(mid-1)+arr.get(mid))/2;
+        }
+    }
+}
+
+/**
+ * Your MedianFinder object will be instantiated and called as such:
+ * MedianFinder obj = new MedianFinder();
+ * obj.addNum(num);
+ * double param_2 = obj.findMedian();
+ */
+
+//Adding while sorting - Linear search
+class MedianFinder {
+
+    private ArrayList<Integer> arr;
+
+    public MedianFinder() {
+        arr = new ArrayList<>();
+    }
+    
+    public void addNum(int num) {
+        if(arr.size() == 0)
+            arr.add(num);
+
+        else
+        {
+            int i=0;
+            //Find the correct position
+            while(arr.get(i) <= num && i<arr.size()-1) i++;
+
+            //Insert the `num`
+            if(arr.get(i) <= num)
+                arr.add(i+1, num);
+            else
+                arr.add(i, num);
+        }
+    }
+    
+    public double findMedian() {
+        int mid = arr.size()/2;
+        if(arr.size() % 2 != 0)
+        {
+            //Odd size
+            return (double) arr.get(mid);
+        }
+        else
+        {
+            return (double) (arr.get(mid-1)+arr.get(mid))/2;
+        }
+    }
+}
+
+//Adding while sorting - Binary search
+class MedianFinder {
+
+    private ArrayList<Integer> arr;
+
+    public MedianFinder() {
+        arr = new ArrayList<>();
+    }
+    
+    public void addNum(int num) {
+        if(arr.size() == 0)
+            arr.add(num);
+
+        else
+        {
+            int start = 0;
+            int end = arr.size() - 1;
+            while (start <= end) {
+                int mid = start + (end - start) / 2;
+                if (arr.get(mid) == num) {
+                    start = mid;
+                    break;
+                } else if (arr.get(mid) < num) {
+                    start = mid + 1;
+                } else {
+                    end = mid - 1;
+                }
+            }
+            arr.add(start, num);
+        }
+    }
+    
+    public double findMedian() {
+        int mid = arr.size()/2;
+        if(arr.size() % 2 != 0)
+        {
+            //Odd size
+            return (double) arr.get(mid);
+        }
+        else
+        {
+            return (double) (arr.get(mid-1)+arr.get(mid))/2;
+        }
+    }
+}
+
+//Heap - priority queue
+class MedianFinder {
+
+    private PriorityQueue<Integer> maxHeap;
+    private PriorityQueue<Integer> minHeap;
+
+    public MedianFinder() {
+        maxHeap = new PriorityQueue<>((a, b)-> (b - a));
+        minHeap = new PriorityQueue<>((a, b)-> (a - b));
+    }
+    
+    public void addNum(int num) {
+        if(maxHeap.size() == 0 || maxHeap.peek() >= num) maxHeap.add(num);
+        else minHeap.add(num);
+        balancingHeaps();
+    }
+    
+    public double findMedian() {
+        if(maxHeap.size() > minHeap.size()) return maxHeap.peek();
+        else if(minHeap.size() > maxHeap.size()) return minHeap.peek();
+        else return (maxHeap.peek() + minHeap.peek()) / 2.0;
+    }
+
+     private void balancingHeaps(){
+         //offer - add
+         //poll - remove
+        if(maxHeap.size() - minHeap.size() > 1) minHeap.add(maxHeap.remove());
+        else if(minHeap.size() - maxHeap.size() > 1) maxHeap.add(minHeap.remove());
+    }
+}
+
