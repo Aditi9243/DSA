@@ -7,7 +7,9 @@ class Solution {
             map.put(n, map.getOrDefault(n, 0) + 1);
         }
 
+        //Max Heap
         //PriorityQueue<Map.Entry<Integer, Integer>> maxHeap = new PriorityQueue<>((a,b)->(b.getValue()-a.getValue()));
+        //Min Heap
         //PriorityQueue<Map.Entry<Integer, Integer>> minHeap = new PriorityQueue<>((a, b) -> Integer.compare(a.getValue(), b.getValue()));
         
         PriorityQueue<Map.Entry<Integer, Integer>> minHeap = new PriorityQueue<>((a,b)->(a.getValue()-b.getValue()));
