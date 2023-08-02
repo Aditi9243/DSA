@@ -76,3 +76,35 @@ class Solution {
         return ans;
     }
 }
+
+class Solution {
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> ans = new ArrayList<>();
+        ArrayList<Integer> temp = new ArrayList<>();
+        for(int i=0; i<nums.length; i++)
+        {
+            temp.add(nums[i]);
+        }
+
+        helper(ans, temp, 0);
+        return ans;
+    }
+
+    private void helper(List<List<Integer>> ans, List<Integer> temp, int i)
+    {
+        if(i == temp.size() - 1)
+        {
+            ans.add(new ArrayList<>(temp));
+        }
+
+        for(int j=i; j<temp.size(); j++)
+        {
+            if (i != j && temp.get(i).equals(temp.get(j))) {
+                continue; // Skip swapping if the elements are the same
+            }
+            Collections.swap(temp, i, j);
+            helper(ans, temp, i+1);
+            Collections.swap(temp, i, j); // Backtrack by swapping back to the original order
+        }
+    }
+}
