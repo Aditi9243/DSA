@@ -1,0 +1,165 @@
+class Solution {
+    public String reverseWords(String s) {
+        ArrayList<String> words = new ArrayList<>();
+        int k = 0;
+        s.trim();
+        words.add("");
+        
+        for(int i=0; i<s.length(); i++)
+        {
+            if(words.get(k).length() == 0 && s.charAt(i) == ' ')
+            {
+                continue;
+            }
+
+            if(s.charAt(i) == ' ')
+            {
+                k++;
+                words.add(k, "");
+                continue;
+            }
+
+            String str = words.get(k) + s.charAt(i);
+            words.set(k, str);
+        }
+
+        String ans = "";
+        for(int i=words.size()-1; i>=0; i--)
+        {
+            ans += words.get(i) + " ";
+        }
+
+        return ans.trim();
+    }
+}
+
+class Solution {
+    public String reverseWords(String s) {
+        s.trim();
+        String[] str = s.split("\\s");
+        String ans = "";
+        for(int i=str.length-1; i>=0; i--)
+        {
+            if(str[i].equals(""))
+                continue;
+            
+            ans += str[i] + " ";
+        }
+
+        return ans.trim();
+    }
+}
+
+class Solution {
+    public String reverseWords(String s) {
+        String[] str = s.trim().split("\\s+");
+        String ans = "";
+        for(int i=str.length-1; i>=0; i--)
+        {
+            ans += str[i] + " ";
+        }
+
+        return ans.trim();
+    }
+}
+
+class Solution {
+    public String reverseWords(String s) {
+        String[] str = s.trim().split("\\s+");
+        String ans = "";
+        for (int i = str.length-1; i>0; i--) {
+            ans += str[i] + " ";
+        }
+        return ans + str[0];
+    }
+}
+
+
+class Solution {
+    public String reverseWords(String s) {
+        String[] str = s.trim().split(" +");
+        Collections.reverse(Arrays.asList(str));
+        return String.join(" ", str);
+    }
+}
+
+class Solution {
+    public String reverseWords(String s) {
+        // Convert the string to a character array
+        char[] chars = s.trim().toCharArray();
+        
+        // Reverse the entire string
+        reverse(chars, 0, chars.length - 1);
+        
+        // Reverse each individual word
+        reverseWords(chars);
+        
+        // Remove leading, trailing, and extra spaces
+        return cleanSpaces(chars);
+    }
+    private void reverse(char[] chars, int start, int end) {
+        while (start < end) {
+            char temp = chars[start];
+            chars[start] = chars[end];
+            chars[end] = temp;
+            start++;
+            end--;
+        }
+    }
+    
+    private void reverseWords(char[] chars) {
+        int n = chars.length;
+        int i = 0, j = 0;
+        
+        while (i < n) {
+            // Skip leading spaces
+            while (i < n && chars[i] == ' ') {
+                i++;
+            }
+            
+            // Move j to the start of the word
+            j = i;
+            
+            // Move j to the end of the word
+            while (j < n && chars[j] != ' ') {
+                j++;
+            }
+            
+            // Reverse the word
+            reverse(chars, i, j - 1);
+            
+            // Move i to the next word
+            i = j;
+        }
+    }
+
+    private String cleanSpaces(char[] chars) {
+        int n = chars.length;
+        int i = 0, j = 0;
+        
+        while (j < n) {
+            // Skip leading spaces
+            while (j < n && chars[j] == ' ') {
+                j++;
+            }
+            
+            // Copy non-space characters
+            while (j < n && chars[j] != ' ') {
+                chars[i++] = chars[j++];
+            }
+            
+            // Skip trailing spaces
+            while (j < n && chars[j] == ' ') {
+                j++;
+            }
+            
+            // Add a single space between words
+            if (j < n) {
+                chars[i++] = ' ';
+            }
+        }
+        
+        // Return the cleaned string
+        return new String(chars).substring(0, i);
+    }
+}
