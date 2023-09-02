@@ -78,3 +78,33 @@ class Solution {
 
 // Memoization - Bottom Up
 
+class Solution {
+    public int minExtraChar(String s, String[] dictionary) {
+        int n = s.length();
+        Map<String, Integer> map = new HashMap<>();
+        for (String word : dictionary) {
+            map.put(word, map.getOrDefault(word, 0) + 1);
+        }
+        int[] dp = new int[n + 1];
+        
+        for (int idx = n - 1; idx >= 0; idx--) // idx denotes the startIdx of current sub problem string
+        {
+            String currStr = "";
+            int minExtra = s.length();
+            for (int cutIdx = idx; cutIdx < n; cutIdx++) {
+                currStr += s.charAt(cutIdx);
+                // currStr will be a string from (index to cutIdx)
+
+                // if string not in dictionary, we have to delete as they are extra chars
+                int currExtra = (map.containsKey(currStr)) ? 0 : currStr.length();
+                int nextExtra = dp[cutIdx + 1];
+                int totalExtra = currExtra + nextExtra;
+
+                minExtra = Math.min(minExtra, totalExtra);
+            }
+            dp[idx] = minExtra;
+        }
+        
+        return dp[0];
+    }
+}
