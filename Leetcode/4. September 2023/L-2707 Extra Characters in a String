@@ -1,0 +1,80 @@
+// Recursive - TLE
+
+class Solution {
+    public int minExtraChar(String s, String[] dictionary) {
+        Map<String, Integer> map = new HashMap<>();
+        for(String word : dictionary)
+        {
+            map.put(word, map.getOrDefault(word, 0)+1);
+        }
+
+        return solve(s, map, 0);
+    }
+
+    private int solve(String s, Map<String, Integer> map, int idx)
+    {
+        if(idx >= s.length())
+            return 0;
+
+        String currStr = "";
+        int minExtra = s.length();
+        for (int cutIdx = idx; cutIdx < s.length(); cutIdx++) {
+            currStr += s.charAt(cutIdx);
+            // currStr will be a string from (index to cutIdx)
+
+            // if string not in dictionary, we have to delete as they are extra chars
+            int currExtra = (map.containsKey(currStr)) ? 0 : currStr.length();
+            int nextExtra = solve(s, map, cutIdx + 1);  //Recursive call
+            int totalExtra = currExtra + nextExtra;
+
+            minExtra = Math.min(minExtra, totalExtra);
+        }
+        return minExtra;
+    }
+}
+
+// Memoization - Top Down
+
+class Solution {
+    public int minExtraChar(String s, String[] dictionary) {
+        Map<String, Integer> map = new HashMap<>();
+        for(String word : dictionary)
+        {
+            map.put(word, map.getOrDefault(word, 0)+1);
+        }
+
+        int[] dp = new int[s.length()];
+        // for (int i = 0; i < dp.length; i++) {
+        //     dp[i] = -1;
+        // }
+        Arrays.fill(dp, -1);
+        return solve(s, map, 0, dp);
+    }
+
+    private int solve(String s, Map<String, Integer> map, int idx, int[] dp)
+    {
+        if(idx >= s.length())
+            return 0;
+
+        if (dp[idx] != -1) 
+            return dp[idx]; // use the stored results
+
+        String currStr = "";
+        int minExtra = s.length();
+        for (int cutIdx = idx; cutIdx < s.length(); cutIdx++) {
+            currStr += s.charAt(cutIdx);
+            // currStr will be a string from (index to cutIdx)
+
+            // if string not in dictionary, we have to delete as they are extra chars
+            int currExtra = (map.containsKey(currStr)) ? 0 : currStr.length();
+            int nextExtra = solve(s, map, cutIdx + 1, dp);  //Recursive call
+            int totalExtra = currExtra + nextExtra;
+
+            minExtra = Math.min(minExtra, totalExtra);
+        }
+        return dp[idx] = minExtra;
+    }
+}
+
+// Memoization - Bottom Up
+
