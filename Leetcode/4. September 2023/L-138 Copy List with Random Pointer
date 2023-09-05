@@ -1,0 +1,119 @@
+/*
+// Definition for a Node.
+class Node {
+    int val;
+    Node next;
+    Node random;
+
+    public Node(int val) {
+        this.val = val;
+        this.next = null;
+        this.random = null;
+    }
+}
+*/
+
+class Solution {
+    public Node copyRandomList(Node head) {
+        if(head == null)
+            return null;
+
+        //Duplicate each node
+        Node curr = head;
+        while(curr != null)
+        {
+            Node next = curr.next;
+            curr.next = new Node(curr.val);
+            curr.next.next = next;
+            curr = next;            
+        }
+
+        //Duplicating the random value of each node
+        curr = head;
+        while(curr != null)
+        {
+            if(curr.random != null)
+            {
+                curr.next.random = curr.random.next;
+            }
+            curr = curr.next.next;
+        }
+
+        //Separating the main list and the copy linkedlist
+        curr = head;
+        Node copyHead = head.next;
+        Node copy = copyHead;
+
+        while(copy.next != null)
+        {
+            curr.next = curr.next.next;
+            curr = curr.next;
+
+            copy.next = copy.next.next;
+            copy = copy.next;
+        }
+        curr.next = curr.next.next;
+
+        return copyHead;
+    }
+}
+
+class Solution {
+    public Node copyRandomList(Node head) {
+        if(head == null)
+            return null;
+
+        Node newHead, curr, copy;
+        
+        //Duplicate each node
+        for (curr = head; curr != null; curr = curr.next.next) {
+            copy = new Node(curr.val);
+            copy.next = curr.next;
+            curr.next = copy;
+        }
+
+        //Duplicating the random value of each node
+        newHead = head.next;
+        for (curr = head; curr != null; curr = curr.next.next) 
+        {
+            if (curr.random != null)
+                curr.next.random = curr.random.next;
+        }
+        
+        //Separating the main list and the copy linkedlist
+        for (curr = head; curr != null; curr = curr.next) 
+        {
+            copy = curr.next;
+            curr.next = copy.next;
+            if (copy.next != null)
+                copy.next = copy.next.next;
+        }
+
+        return newHead;
+    }
+}
+
+class Solution {
+    public Node copyRandomList(Node head) {
+        HashMap<Node,Node> hm =new HashMap<>();
+        
+        Node temp = head;
+        //Inserting deep nodes of every node in the hashmap.
+        while(temp != null) {
+            Node newNode = new Node(temp.val);
+            hm.put(temp,newNode);
+            temp = temp.next;
+        }
+
+        temp = head;
+        //Linking next and random pointer as given question.
+        while(temp != null) {
+            Node node = hm.get(temp);
+            node.next = (temp.next != null) ? hm.get(temp.next):null;
+            node.random = (temp.random != null) ? hm.get(temp.random):null;
+            temp = temp.next;
+        }
+        
+        return hm.get(head);
+    }
+}
