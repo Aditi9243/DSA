@@ -1,0 +1,42 @@
+class Solution {
+    public int countOrders(int n) {
+        long ans = 1, mod = (long)1e9+7;
+        for(int i=1; i<=n; i++)
+        {
+            ans = ans * (i * 2 - 1) * i % mod;
+        }
+        return (int)ans;
+    }
+}
+
+// Recursive
+
+class Solution {
+    public int countOrders(int n) {
+        return (n > 0) ? (int)((long)countOrders(n-1)* (n * 2 - 1) * n % ((long)1e9+7)) : 1;
+    }
+}
+
+// DP 
+
+class Solution {
+    private int mod = (int) Math.pow(10,9)+7;   //private long mod = (long) Math.pow(10,9)+7;
+    public int countOrders(int n) {
+        if(n == 1)
+            return 1;
+        if(n == 2)
+            return 6;
+            
+        long[] dp = new long[n+1];
+        dp[1] = 1;
+        dp[2] = 6;
+        for(int i=3; i<=n; i++)
+        {
+            int space = (i-1)*2 + 1;
+            long value = space * (space+1)/2;
+            dp[i] = (dp[i-1]*value) % mod;
+        }
+
+        return (int) dp[n];
+    }
+}
