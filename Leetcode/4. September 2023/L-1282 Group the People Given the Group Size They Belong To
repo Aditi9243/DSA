@@ -1,0 +1,24 @@
+// Greedy + Hashmap
+
+class Solution {
+    public List<List<Integer>> groupThePeople(int[] groupSizes) {
+        List<List<Integer>> ans = new ArrayList<>();
+        Map<Integer, List<Integer>> map = new HashMap<>();
+        for(int i=0; i<groupSizes.length; i++)
+        {
+            if(!map.containsKey(groupSizes[i]))
+                map.put(groupSizes[i], new ArrayList<>());
+
+            List<Integer> curr = map.get(groupSizes[i]);
+            curr.add(i);
+
+            if(curr.size() == groupSizes[i])
+            {
+                ans.add(curr);
+                map.remove(groupSizes[i]);
+            }
+        }
+
+        return ans;
+    }
+}
