@@ -1,0 +1,63 @@
+//  Iterative
+
+class Solution {
+   public List<String> findItinerary(List<List<String>> tickets) {
+       Map<String, PriorityQueue<String>> targets = new HashMap<>();
+
+        for (List<String> ticket : tickets) {
+            String startAirport = ticket.get(0);
+            String destinationAirport = ticket.get(1);
+            
+            if (!targets.containsKey(startAirport)) {
+                targets.put(startAirport, new PriorityQueue<>());
+            }
+            
+            targets.get(startAirport).add(destinationAirport);
+        }
+
+        List<String> route = new LinkedList();
+        Stack<String> st = new Stack<>();
+        st.push("JFK");
+
+        while(!st.isEmpty())
+        {
+            while(targets.containsKey(st.peek()) && !targets.get(st.peek()).isEmpty())
+                st.push(targets.get(st.peek()).poll());
+
+            route.add(0, st.pop());
+        }
+        return route;
+    }
+}
+
+//  Recursive
+
+class Solution {
+    Map<String, PriorityQueue<String>> targets = new HashMap<>();
+    List<String> route = new LinkedList();
+
+   public List<String> findItinerary(List<List<String>> tickets) {
+        for (List<String> ticket : tickets) {
+            String startAirport = ticket.get(0);
+            String destinationAirport = ticket.get(1);
+            
+            if (!targets.containsKey(startAirport)) {
+                targets.put(startAirport, new PriorityQueue<>());
+            }
+            
+            targets.get(startAirport).add(destinationAirport);
+        }
+
+        visit("JFK");
+        return route;
+    }
+
+
+    private void visit(String airport)
+    {
+        while(targets.containsKey(airport) && !targets.get(airport).isEmpty())
+            visit(targets.get(airport).poll());
+
+        route.add(0, airport);
+    }
+}
