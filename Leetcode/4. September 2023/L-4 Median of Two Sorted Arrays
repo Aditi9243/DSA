@@ -1,0 +1,85 @@
+class Solution {
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int n = nums1.length, m = nums2.length;
+        int[] nums = new int[n+m];
+        int k = 0;
+        for(int i=0; i<nums1.length; )
+        {
+            nums[k++] = nums1[i++];
+        }
+
+        for(int i=0; i<nums2.length; )
+        {
+            nums[k++] = nums2[i++];
+        }
+
+        Arrays.sort(nums);
+        int mid = (n+m)/2;
+
+        return ((m+n) % 2 != 0)? nums[mid] : (double)(nums[mid-1] + nums[mid])/2;
+    }
+}
+
+class Solution {
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int n = nums1.length, m = nums2.length;
+        int[] nums = new int[n+m];
+        int k = 0, i = 0, j = 0;
+        while(i < n && j < m)
+        {
+            if(nums1[i] < nums2[j])
+            {
+                nums[k++] = nums1[i++];
+            }
+            else
+                nums[k++] = nums2[j++];
+        }
+
+        while(i < n)
+        {
+            nums[k++] = nums1[i++];
+        }
+
+        while(j < m)
+        {
+            nums[k++] = nums2[j++];
+        }
+
+        int mid = (n+m)/2;
+
+        return ((m+n) % 2 != 0)? nums[mid] : (double)(nums[mid-1] + nums[mid])/2;
+    }
+}
+
+class Solution {
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int n = nums1.length, m = nums2.length;
+        int i = 0, j = 0;
+
+        int mid1 = 0, mid2 = 0;
+        for(int k=0; k<=(m+n)/2; k++)
+        {
+            mid1 = mid2;
+            if(i == n)
+            {
+                //no element left in array 1
+                mid2 = nums2[j++];
+            }
+            else if(j == m)
+            {
+                //no element left in array 2
+                mid2 = nums1[i++];
+            }
+            else if(nums1[i] < nums2[j])
+            {
+                mid2 = nums1[i++];
+            }
+            else
+            {
+                mid2 = nums2[j++];
+            }
+        }
+
+        return ((m+n) % 2 != 0)? mid2 : (double)(mid1 + mid2)/2;
+    }
+}
