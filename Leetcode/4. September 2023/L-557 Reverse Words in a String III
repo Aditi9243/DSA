@@ -1,0 +1,123 @@
+class Solution {
+    public String reverseWords(String s) {
+        String[] words = s.split(" ");
+        int n = words.length;
+        String ans = "";
+        for(int i=0; i<n; i++)
+        {
+            String rev = "";
+            for(int j=words[i].length()-1; j>=0; j--)
+            {
+                rev += words[i].charAt(j);
+            }
+
+            if(i == n-1)
+            {
+                ans += rev;
+                break;
+            }
+
+            ans += rev + " ";
+        }
+
+        return ans;
+    }
+}
+
+class Solution {
+    public String reverseWords(String s) {
+        String[] words = s.split(" ");
+        int n = words.length;
+        String ans = "";
+        for(int i=0; i<n; i++)
+        {
+            ans += reverse(words[i]);
+            if(i != n-1)
+            {
+                ans += " ";
+            }
+        }
+
+        return ans;
+    }
+
+    private String reverse(String word)
+    {
+        String rev = "";
+        for(int i=word.length()-1; i>=0; i--)
+        {
+            rev += word.charAt(i);
+        }
+
+        return rev;
+    }
+}
+
+class Solution {
+    public String reverseWords(String s) {
+        char[] ch = s.toCharArray();
+        int n = ch.length;
+        for(int i=0; i<n; i++)
+        {
+            if(ch[i] != ' ')
+            {
+                //when i is not a space
+                int j = i;
+                while(j+1 < ch.length && ch[j+1] != ' ')
+                    j++;
+
+                reverse(ch, i, j);
+                i = j;
+            }
+        }
+
+        return new String(ch);
+    }
+
+    private void reverse(char[] ch, int i, int j)
+    {
+        while(i < j)
+        {
+            char temp = ch[i];
+            ch[i] = ch[j];
+            ch[j] = temp;
+
+            i++;
+            j--;
+        }
+    }
+}
+
+class Solution {
+    public String reverseWords(String s) {
+        char[] ch = s.toCharArray();
+        int n = ch.length;
+        int i = 0;
+        for(int j=1; j<=n; j++)
+        {
+            if(j == n || ch[j] == ' ')
+            {
+                //when j is a space
+                reverse(ch, i, j-1);
+                i = j+1;
+            }
+        }
+
+        //if j == n is not present above then we have to call reverse again
+        //reverse(ch, i, n-1)
+        return new String(ch);
+    }
+
+    private void reverse(char[] ch, int i, int j)
+    {
+        while(i < j)
+        {
+            char temp = ch[i];
+            ch[i] = ch[j];
+            ch[j] = temp;
+
+            i++;
+            j--;
+        }
+    }
+}
